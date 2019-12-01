@@ -26,4 +26,11 @@ subprojects {
     sourceCompatibility = JavaVersion.VERSION_1_7
   }
 
+  test {
+    useJUnitPlatform()
+    testLogging {
+      events "failed"
+      exceptionFormat "full"
+    }
+  }
 }

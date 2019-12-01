@@ -16,7 +16,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 
-class ClassBuilderTest {
+class TypeBuilderTest {
 
 	@Test
 	void mustMapScanClassName() {

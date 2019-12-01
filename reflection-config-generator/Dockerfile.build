@@ -1,0 +1,2 @@
+FROM adoptopenjdk:8u232-b09-jdk-hotspot
+RUN apt-get update && apt-get install -y git

@@ -55,6 +55,7 @@ public class TextBlockProcessor implements Processor {
       Symbol.ClassSymbol lastClassUnit = (Symbol.ClassSymbol) this.lastClass;
       CompilationUnit cu = JavaParser.parse(lastClassUnit.sourcefile.openReader(true), true);
 //      System.out.println("classfile: " + lastClassUnit.sourcefile);
+      System.out.println(cu.toString());
       lastClassUnit.sourcefile.openWriter().write(cu.toString());
     }
 

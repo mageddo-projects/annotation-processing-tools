@@ -1,0 +1,89 @@
+[ {
+  "name" : "com.acme.Car",
+  "allDeclaredConstructors" : true,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : true,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : true
+}, {
+  "name" : "com.acme.Fruit",
+  "allDeclaredConstructors" : true,
+  "allPublicConstructors" : true,
+  "allDeclaredMethods" : true,
+  "allPublicMethods" : true,
+  "allPublicFields" : true,
+  "allDeclaredFields" : true
+}, {
+  "name" : "com.acme.Person",
+  "allDeclaredConstructors" : true,
+  "allPublicConstructors" : true,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false,
+  "methods" : [ {
+    "name" : "<init>",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "com.acme.RuntimeReflectionFruit",
+  "allDeclaredConstructors" : true,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : true
+}, {
+  "name" : "com.acme.firstlevel.Config",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : true
+}, {
+  "name" : "com.acme.firstlevel.secondlevel.Stuff",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : true
+}, {
+  "name" : "com.acme.firstlevel.secondlevel.Stuff2",
+  "allDeclaredConstructors" : true,
+  "allPublicConstructors" : true,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false,
+  "methods" : [ {
+    "name" : "<init>",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "com.acme.subpackage.Color",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : true
+}, {
+  "name" : "com.acme.subpackage.UpperCass",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : true
+}, {
+  "name" : "com.acme.subpackage.UpperCass$InnerClass",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : true
+} ]

@@ -1,0 +1,79 @@
+println ("> :${project.name}")
+
+apply plugin: "maven"
+apply plugin: "maven-publish"
+apply plugin: "de.marcphilipp.nexus-publish"
+apply plugin: "io.codearte.nexus-staging"
+
+task sourcesJar(type: Jar) {
+  from sourceSets.main.allJava
+  archiveClassifier = 'sources'
+}
+
+task javadocJar(type: Jar) {
+  from javadoc
+  archiveClassifier = 'javadoc'
+}
+
+artifacts {
+  archives javadocJar, sourcesJar
+}
+
+nexusStaging {
+  packageGroup = 'com.mageddo'
+  username = project.findProperty("ossrhUsername")
+  password = project.findProperty("ossrhPassword")
+}
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from(components.java)
+      artifact sourcesJar
+      artifact javadocJar
+      pom {
+        name = project.name
+        packaging = 'jar'
+        description = project.description
+        url = "${projectPage}"
+
+        scm {
+          connection = "${repositoryUrl}"
+          developerConnection = "${repositoryUrl}"
+          url = "${repositoryUrl}"
+        }
+
+        licenses {
+          license {
+            name = 'The Apache License, Version 2.0'
+            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+
+        developers {
+          developer {
+            id = 'mageddo'
+            name = 'Elvis Souza'
+            email = 'edigitalb@gmail.com'
+          }
+        }
+      }
+    }
+  }
+}
+
+nexusPublishing {
+  repositories {
+    sonatype{
+      username = project.findProperty("ossrhUsername")
+      password = project.findProperty("ossrhPassword")
+    }
+  }
+}
+
+if (project.hasProperty("signing.keyId")) {
+  apply plugin: 'signing'
+  signing {
+    sign publishing.publications.mavenJava
+  }
+}

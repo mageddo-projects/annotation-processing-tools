@@ -1,3 +1,7 @@
 include ':aptools'
+
 include ':reflection-config-generator'
+include ':reflection-config-generator:acceptance-tests'
+
 include ':lombok-ext'
+include ':lombok-ext:acceptance-tests'

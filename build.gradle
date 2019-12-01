@@ -1,9 +1,22 @@
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "de.marcphilipp.gradle:nexus-publish-plugin:0.4.0"
+    classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.1"
+  }
+}
+
 plugins {
-  id "maven"
-  id "maven-publish"
+//  id "maven"
+//  id "maven-publish"
   id "io.codearte.nexus-staging" version "0.21.1"
   id "de.marcphilipp.nexus-publish" version "0.4.0"
 }
+
 
 if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
   throw new UnsupportedOperationException(
@@ -22,6 +35,10 @@ subprojects {
 
   sourceCompatibility = JavaVersion.VERSION_1_7
 
+  tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+  }
+
   compileTestJava {
     sourceCompatibility = JavaVersion.VERSION_1_7
   }
@@ -33,4 +50,23 @@ subprojects {
       exceptionFormat "full"
     }
   }
+}
+
+// sonatype publishing
+nexusPublishing {
+  repositories {
+    sonatype()
+  }
+}
+
+configure([
+    project(":aptools"), project(":lombok-ext"), project(":reflection-config-generator")
+]){
+
+  apply from: "${rootProject.rootDir}/nexus.gradle"
+
+}
+
+task version(){
+  println(project.version)
 }

@@ -13,8 +13,8 @@ buildscript {
 plugins {
 //  id "maven"
 //  id "maven-publish"
-  id "io.codearte.nexus-staging" version "0.21.1"
-  id "de.marcphilipp.nexus-publish" version "0.4.0"
+//  id "io.codearte.nexus-staging" version "0.21.1"
+//  id "de.marcphilipp.nexus-publish" version "0.4.0"
 }
 
 
@@ -52,13 +52,6 @@ subprojects {
   }
 }
 
-// sonatype publishing
-nexusPublishing {
-  repositories {
-    sonatype()
-  }
-}
-
 configure([
     project(":aptools"), project(":lombok-ext"), project(":reflection-config-generator")
 ]){
@@ -68,5 +61,7 @@ configure([
 }
 
 task version(){
-  println(project.version)
+  doLast {
+    println(project.version)
+  }
 }

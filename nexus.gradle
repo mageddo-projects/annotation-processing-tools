@@ -1,7 +1,9 @@
+println ("> :${project.name}")
+
 apply plugin: "maven"
 apply plugin: "maven-publish"
-//apply plugin: "io.codearte.nexus-staging"
-//apply plugin: "de.marcphilipp.nexus-publish"
+apply plugin: "de.marcphilipp.nexus-publish"
+apply plugin: "io.codearte.nexus-staging"
 
 task sourcesJar(type: Jar) {
   from sourceSets.main.allJava
@@ -33,7 +35,7 @@ publishing {
         name = project.name
         packaging = 'jar'
         description = project.description
-        url = "${repositoryUrl}"
+        url = "${projectPage}"
 
         scm {
           connection = "${repositoryUrl}"
@@ -60,6 +62,14 @@ publishing {
   }
 }
 
+nexusPublishing {
+  repositories {
+    sonatype{
+      username = project.findProperty("ossrhUsername")
+      password = project.findProperty("ossrhPassword")
+    }
+  }
+}
 
 if (project.hasProperty("signing.keyId")) {
   apply plugin: 'signing'

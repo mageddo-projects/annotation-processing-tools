@@ -1,0 +1,3 @@
+include ':aptools'
+include ':reflection-config-generator'
+include ':lombok-ext'

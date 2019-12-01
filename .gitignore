@@ -1,0 +1,16 @@
+.idea
+*.iml
+target/
+build
+.gradle
+*.log
+old
+maven
+out/
+*.orig
+bin
+.apt_generated/
+.classpath
+.settings
+.project
+reflection-configuration-example

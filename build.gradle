@@ -10,14 +10,6 @@ buildscript {
   }
 }
 
-plugins {
-//  id "maven"
-//  id "maven-publish"
-//  id "io.codearte.nexus-staging" version "0.21.1"
-//  id "de.marcphilipp.nexus-publish" version "0.4.0"
-}
-
-
 if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
   throw new UnsupportedOperationException(
       "Please use JDK 8 to compile this project, current: ${JavaVersion.current()}"
@@ -55,9 +47,7 @@ subprojects {
 configure([
     project(":aptools"), project(":lombok-ext"), project(":reflection-config-generator")
 ]){
-
   apply from: "${rootProject.rootDir}/nexus.gradle"
-
 }
 
 task version(){

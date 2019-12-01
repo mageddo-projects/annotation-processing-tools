@@ -1,23 +1,25 @@
 package nativeimage.core;
 
-import com.mageddo.aptools.ClassUtils;
-import com.mageddo.aptools.IoUtils;
-import com.mageddo.aptools.Processor;
-import com.mageddo.aptools.elements.ElementFinder;
-import com.mageddo.aptools.log.Logger;
-import com.mageddo.aptools.log.LoggerFactory;
-import nativeimage.Reflection;
-import nativeimage.Reflections;
-import nativeimage.core.domain.ReflectionConfig;
+import java.io.IOException;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
-import java.io.IOException;
-import java.util.LinkedHashSet;
-import java.util.Set;
+
+import com.mageddo.aptools.ClassUtils;
+import com.mageddo.aptools.IoUtils;
+import com.mageddo.aptools.Processor;
+import com.mageddo.aptools.elements.ElementFinder;
+import com.mageddo.aptools.log.Logger;
+import com.mageddo.aptools.log.LoggerFactory;
+
+import nativeimage.Reflection;
+import nativeimage.Reflections;
+import nativeimage.core.domain.ReflectionConfig;
 
 public class NativeImageReflectionConfigGenerator implements Processor {
 

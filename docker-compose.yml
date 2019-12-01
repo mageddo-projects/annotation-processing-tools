@@ -2,7 +2,7 @@ version: '3'
 services:
   travis-build:
     build:
-      context: reflection-config-generator
+      context: .
       dockerfile: Dockerfile.build
     command: ./builder.sh deploy
     working_dir: /app
@@ -13,7 +13,7 @@ services:
 
   travis-pull-request-build:
     build:
-      context: reflection-config-generator
+      context: .
       dockerfile: Dockerfile.build
     command: ./gradlew build -i
     working_dir: /app

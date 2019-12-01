@@ -2,8 +2,7 @@ println ("> :${project.name}")
 
 apply plugin: "maven"
 apply plugin: "maven-publish"
-apply plugin: "de.marcphilipp.nexus-publish"
-apply plugin: "io.codearte.nexus-staging"
+apply plugin: "de.marcphilipp.nexus-publish" // upload artificates to sonatype
 
 task sourcesJar(type: Jar) {
   from sourceSets.main.allJava
@@ -17,12 +16,6 @@ task javadocJar(type: Jar) {
 
 artifacts {
   archives javadocJar, sourcesJar
-}
-
-nexusStaging {
-  packageGroup = 'com.mageddo'
-  username = project.findProperty("ossrhUsername")
-  password = project.findProperty("ossrhPassword")
 }
 
 publishing {

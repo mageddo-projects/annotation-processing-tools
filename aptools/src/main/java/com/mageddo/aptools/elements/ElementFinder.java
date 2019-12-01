@@ -6,6 +6,8 @@ import java.util.List;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 
+import com.mageddo.aptools.util.Predicate;
+
 public class ElementFinder {
 
   private ElementFinder() {
@@ -38,7 +40,4 @@ public class ElementFinder {
     }
   }
 
-  interface Predicate<T> {
-	  boolean test(T t);
-  }
 }

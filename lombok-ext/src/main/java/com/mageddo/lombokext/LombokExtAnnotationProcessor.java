@@ -16,6 +16,7 @@ import javax.lang.model.element.TypeElement;
 import com.mageddo.aptools.Processor;
 import com.mageddo.aptools.log.Logger;
 import com.mageddo.aptools.log.LoggerFactory;
+import com.mageddo.aptools.textblock.TextBlockProcessor;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -31,7 +32,7 @@ public class LombokExtAnnotationProcessor extends AbstractProcessor {
 		super.init(processingEnv);
 		this.logger = LoggerFactory.bindLogger(this.processingEnv.getMessager());
 		this.processors = new ArrayList<>();
-//		this.processors.add(new TextBlockProcessor(processingEnv));
+		this.processors.add(new TextBlockProcessor(processingEnv));
 
 	}
 

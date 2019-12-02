@@ -25,7 +25,6 @@ public class ClassAnnotatedVariablesJavaParserScanner extends VoidVisitorAdapter
 
   @Override
   public void visit(FieldDeclaration n, CompilationUnit arg){
-//    System.out.printf("field=%s%n", n);
     for (VariableDeclarator variable : n.getVariables()) {
       final LocalVariable localVariable = new LocalVariable()
           .setName(variable.getId().getName())
@@ -35,32 +34,12 @@ public class ClassAnnotatedVariablesJavaParserScanner extends VoidVisitorAdapter
         this.variables.add(localVariable);
       }
     }
-
   }
-
-//  @Override
-//  public void visit(VariableDeclarator n, CompilationUnit arg){
-//    System.out.printf("VariableDeclarator=%s%n", n);
-//  }
-
-
-//  @Override
-//  public void visit(VariableDeclarationExpr declarationExpr, CompilationUnit arg){
-//    System.out.printf("VariableDeclarationExpr=%s%n", declarationExpr);
-//    final List<LocalVariable> variables = JavaParserExpressionStmtConverter
-//        .toLocalVariables(declarationExpr);
-//    for (LocalVariable variable : variables) {
-//      if(variable.getAnnotations().contains(annotation.getSimpleName())){
-//        this.variables.add(variable);
-//      }
-//    }
-//  }
 
   @Override
   public void visit(ExpressionStmt n, CompilationUnit arg) {
     final List<LocalVariable> variables = JavaParserExpressionStmtConverter
         .toLocalVariables(n);
-//    System.out.printf("ExpressionStmt=%s, variables=%s%n", n, variables);
     for (LocalVariable variable : variables) {
       if(variable.getAnnotations().contains(annotation.getSimpleName())){
         this.variables.add(variable);

@@ -1,6 +1,7 @@
 package com.mageddo.aptools.textblock;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +23,8 @@ import com.mageddo.aptools.log.Logger;
 import com.mageddo.aptools.log.LoggerFactory;
 import com.mageddo.aptools.util.Predicate;
 import com.sun.tools.javac.code.Symbol;
+
+import org.apache.commons.io.IOUtils;
 
 import lombok.TextBlock;
 
@@ -55,8 +58,9 @@ public class TextBlockProcessor implements Processor {
 
     }
 
+    String contentBefore = "";
       for (Element aClass : classes) {
-        if(aClass.toString().contains("Fruit")){
+        if(aClass.toString().contains("Person")){
           System.out.println("deleting Fruit class");
           Symbol.ClassSymbol classSymbol = (Symbol.ClassSymbol) aClass;
 //          classSymbol.classfile = classSymbol.sourcefile;
@@ -66,8 +70,12 @@ public class TextBlockProcessor implements Processor {
 //              .getFiler()
 //              .createSourceFile("Fruit", aClass);
           System.out.println("=======");
+          Reader reader = fruitB.openReader(true);
+          contentBefore = IOUtils.toString(reader);
           Writer writer = fruitB.openWriter();
-          writer.write("package com.mageddo.lombok; public class Fruit {}");
+          writer.write("package com.mageddo.lombok; public class Person { " +
+              "private String lastName;" +
+          " }");
           writer.close();
           classSymbol.sourcefile = fruitB;
 //      System.out.printf("writer=%s, javaFileObject=%s, %n", writer, fruitB);
@@ -82,10 +90,10 @@ public class TextBlockProcessor implements Processor {
 //      System.out.println("classfile: " + lastClassUnit.classfile);
 //      System.out.println(cu.toString());
 
-//      for (Element aClass : classes) {
-//        if(aClass.toString().contains("Fruit")){
+      for (Element aClass : classes) {
+        if(aClass.toString().contains("Person")){
 //          System.out.println("deleting Fruit class");
-//          Symbol.ClassSymbol classSymbol = (Symbol.ClassSymbol) aClass;
+          Symbol.ClassSymbol classSymbol = (Symbol.ClassSymbol) aClass;
 ////          classSymbol.classfile = classSymbol.sourcefile;
 //
 //          JavaFileObject fruitB = processingEnv
@@ -98,8 +106,11 @@ public class TextBlockProcessor implements Processor {
 //          classSymbol.sourcefile = fruitB;
 ////      System.out.printf("writer=%s, javaFileObject=%s, %n", writer, fruitB);
 ////          System.out.printf("writer=%s, %n", classSymbol);
-//        }
-//      }
+          Writer writer = classSymbol.sourcefile.openWriter();
+          writer.write(contentBefore);
+          writer.close();
+        }
+      }
 //      JavaFileObject fruitB = processingEnv
 //          .getFiler()
 //          .createSourceFile("Fruit");

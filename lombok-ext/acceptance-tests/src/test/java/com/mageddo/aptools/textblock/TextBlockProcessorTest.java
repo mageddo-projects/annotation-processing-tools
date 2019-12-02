@@ -60,21 +60,21 @@ class TextBlockProcessorTest {
 
   }
 
-//  @Test
-//  void mustEvaluateTextBlocksInsideLambda() {
-//
-//    // act
-//    final String text = process(() -> {
-//      // text a
-//      @TextBlock
-//      final String block = TextBlocks.lazyInit();
-//      return block;
-//    });
-//
-//    // assert
-//    assertEquals(" text a", text);
-//
-//  }
+  @Test
+  void mustEvaluateTextBlocksInsideLambda() {
+
+    // act
+    final String text = process(() -> {
+      // text a
+      @TextBlock
+      final String block = TextBlocks.lazyInit();
+      return block;
+    });
+
+    // assert
+    assertEquals(" text a", text);
+
+  }
 
   @Test
   void mustEvaluateTextBlocksOnClassField() {

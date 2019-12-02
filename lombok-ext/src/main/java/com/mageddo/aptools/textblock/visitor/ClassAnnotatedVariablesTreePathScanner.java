@@ -22,9 +22,9 @@ public class ClassAnnotatedVariablesTreePathScanner extends TreePathScanner<Obje
 
   @Override
   public Object visitVariable(VariableTree variableTree, Element element) {
-    System.out.println("var: " + variableTree);
+//    System.out.println("var: " + variableTree);
     for (AnnotationTree annotation : variableTree.getModifiers().getAnnotations()) {
-      System.out.println("annotation: " + annotation.getAnnotationType().toString());
+//      System.out.println("annotation: " + annotation.getAnnotationType().toString());
       if(annotation.getAnnotationType().toString().equals(this.annotation.getSimpleName())){
         this.annotatedVars.add(variableTree);
       }

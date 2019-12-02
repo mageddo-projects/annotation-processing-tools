@@ -38,7 +38,6 @@ public class JavaParserExpressionStmtConverter {
   }
 
   private static String getComment(Node node) {
-    System.out.println(">>>>>>>>>" + node);
     if(node.getComment() != null){
       return node.getComment().getContent();
     }

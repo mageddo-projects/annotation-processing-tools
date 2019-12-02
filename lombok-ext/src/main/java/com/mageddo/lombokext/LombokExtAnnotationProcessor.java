@@ -24,28 +24,28 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
 public class LombokExtAnnotationProcessor extends AbstractProcessor {
 
-	private Logger logger;
-	private List<Processor> processors;
+  private Logger logger;
+  private List<Processor> processors;
 
-	@Override
-	public synchronized void init(ProcessingEnvironment processingEnv) {
-		super.init(processingEnv);
-		this.logger = LoggerFactory.bindLogger(this.processingEnv.getMessager());
-		this.processors = new ArrayList<>();
-		this.processors.add(new TextBlockProcessor(processingEnv));
+  @Override
+  public synchronized void init(ProcessingEnvironment processingEnv) {
+    super.init(processingEnv);
+    this.logger = LoggerFactory.bindLogger(this.processingEnv.getMessager());
+    this.processors = new ArrayList<>();
+    this.processors.add(new TextBlockProcessor(processingEnv));
 
-	}
+  }
 
-	@Override
-	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-		try {
-			for (Processor processor : this.processors) {
-				processor.process(new LinkedHashSet<>(annotations), roundEnv);
-			}
-		} catch (Exception e){
-			this.logger.error("fatal: %s\n ", e.getMessage(), ExceptionUtils.getStackTrace(e));
-		}
-		return false;
-	}
+  @Override
+  public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+    try {
+      for (Processor processor : this.processors) {
+        processor.process(new LinkedHashSet<>(annotations), roundEnv);
+      }
+    } catch (Exception e) {
+      this.logger.error("fatal: %s\n ", e.getMessage(), ExceptionUtils.getStackTrace(e));
+    }
+    return false;
+  }
 
 }

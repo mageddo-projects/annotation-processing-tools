@@ -16,8 +16,8 @@ class TextBlockProcessorTest {
     // act
 
     /*
-     * Lorem Ipsum is simply dummy text
-     *  of the printing and typesetting
+     Lorem Ipsum is simply dummy text
+     of the printing and typesetting
      */
     @TextBlock
     final String text = "";

@@ -40,19 +40,14 @@ public class TextBlockProcessor implements Processor {
 
   @Override
   public void process(Set<TypeElement> annotations, RoundEnvironment roundEnv) {
-    try {
-      logger.warn("processingover=%s, tmp: %s", roundEnv.processingOver(), roundEnv
-          .getRootElements());
-      for (final Element element : roundEnv.getRootElements()) {
-
-        final List<VariableTree> classVars = getClassVars(element);
+    logger.warn("processingover=%s, tmp: %s", roundEnv.processingOver(), roundEnv
+        .getRootElements());
+    for (final Element element : roundEnv.getRootElements()) {
+      final List<VariableTree> classVars = getClassVars(element);
+      if(!classVars.isEmpty()){
         final List<LocalVariable> sourceFileVars = getSourceFileVars((Symbol.ClassSymbol) element);
-
         TextBlockVariableFiller.fill(this.treeMaker, classVars, sourceFileVars);
-
       }
-    } catch (Exception e) {
-      logger.error(e.getMessage());
     }
   }
 

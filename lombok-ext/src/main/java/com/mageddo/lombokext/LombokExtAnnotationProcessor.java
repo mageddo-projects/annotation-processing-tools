@@ -42,8 +42,8 @@ public class LombokExtAnnotationProcessor extends AbstractProcessor {
       for (Processor processor : this.processors) {
         processor.process(new LinkedHashSet<>(annotations), roundEnv);
       }
-    } catch (Exception e) {
-      this.logger.error("fatal: %s\n ", e.getMessage(), ExceptionUtils.getStackTrace(e));
+    } catch (Throwable e) {
+      this.logger.error("fatal: %s\n %s", e.getMessage(), ExceptionUtils.getStackTrace(e));
     }
     return false;
   }

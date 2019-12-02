@@ -25,4 +25,26 @@ public class JavaParserExpressionStmtConverter {
     }
     return Collections.emptyList();
   }
+
+  public static List<LocalVariable> toLocalVariables(VariableDeclarationExpr declarationExpr) {
+    for (VariableDeclarator varDeclarator : declarationExpr.getVars()) {
+      return Collections.singletonList(new LocalVariable()
+          .setName(varDeclarator.getId().getName())
+          .setComment(getComment(declarationExpr))
+          .setAnnotations(JavaParserAnnotationConverter.toAnnotationNames(declarationExpr.getAnnotations()))
+      );
+    }
+    return Collections.emptyList();
+  }
+
+  private static String getComment(Node node) {
+    System.out.println(">>>>>>>>>" + node);
+    if(node.getComment() != null){
+      return node.getComment().getContent();
+    }
+    if(node.getParentNode().getComment() != null){
+      return node.getParentNode().getComment().getContent();
+    }
+    return null;
+  }
 }

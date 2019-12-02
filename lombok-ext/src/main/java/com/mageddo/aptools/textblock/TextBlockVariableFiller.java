@@ -13,13 +13,13 @@ public class TextBlockVariableFiller {
       List<LocalVariable> javaParserVars) {
     Validate.isTrue(
         apVars.size() == javaParserVars.size(),
-        "collections size must be equal %d != %d (a=%s, b=%s)",
+        "collections sizes must be equal %d != %d (a=%s, b=%s)",
         apVars.size(), javaParserVars.size(), apVars, javaParserVars
     );
     for (int i = 0; i < apVars.size(); i++) {
       final VariableTree apVar = apVars.get(i);
       final LocalVariable javaParserVar = javaParserVars.get(i);
-
+      Validate.isTrue(javaParserVar.getComment() != null, "variable must have comment " + javaParserVar);
       final JCVariableDecl variableDecl = (JCVariableDecl) apVar;
       variableDecl.init = treeMaker.Literal(javaParserVar.getComment());
     }

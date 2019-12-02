@@ -1,6 +1,7 @@
 package com.mageddo.aptools.textblock;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 
@@ -56,7 +57,9 @@ public class TextBlockProcessor implements Processor {
       CompilationUnit cu = JavaParser.parse(lastClassUnit.sourcefile.openReader(true), true);
 //      System.out.println("classfile: " + lastClassUnit.sourcefile);
       System.out.println(cu.toString());
-      lastClassUnit.sourcefile.openWriter().write(cu.toString());
+      Writer writer = lastClassUnit.sourcefile.openWriter();
+      writer.write(cu.toString());
+      writer.close();
     }
 
     }catch (Exception e){

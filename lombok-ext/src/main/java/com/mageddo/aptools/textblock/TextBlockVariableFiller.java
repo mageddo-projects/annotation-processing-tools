@@ -8,8 +8,8 @@ import com.sun.tools.javac.tree.TreeMaker;
 
 import org.apache.commons.lang3.Validate;
 
-public class VariableMatcher {
-  public static void setupvar(TreeMaker treeMaker, List<VariableTree> apVars,
+public class TextBlockVariableFiller {
+  public static void fill(TreeMaker treeMaker, List<VariableTree> apVars,
       List<LocalVariable> javaParserVars) {
     Validate.isTrue(
         apVars.size() == javaParserVars.size(),

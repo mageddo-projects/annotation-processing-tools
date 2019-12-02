@@ -1,13 +1,15 @@
 package nativeimage.core;
 
-import com.mageddo.aptools.ClassUtils;
-import com.mageddo.aptools.elements.ElementUtils;
-import nativeimage.Reflection;
+import java.util.Collections;
+import java.util.Set;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.type.MirroredTypeException;
-import java.util.Collections;
-import java.util.Set;
+
+import com.mageddo.aptools.ClassUtils;
+import com.mageddo.aptools.elements.ElementUtils;
+
+import nativeimage.Reflection;
 
 public final class TypeBuilder {
 

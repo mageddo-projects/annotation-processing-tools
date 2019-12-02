@@ -3,6 +3,7 @@ package com.mageddo.aptools.textblock;
 import org.junit.jupiter.api.Test;
 
 import lombok.TextBlock;
+import lombok.TextBlocks;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TextBlockProcessorTest {
@@ -20,12 +21,15 @@ class TextBlockProcessorTest {
      of the printing and typesetting
      */
     @TextBlock
-    final String text = "";
+    final String text = TextBlocks.lazyInit();
 
 
     // assert
 
-    assertEquals("", text);
+    assertEquals("\n" +
+        "     Lorem Ipsum is simply dummy text\n" +
+        "     of the printing and typesetting\n" +
+        "     ", text);
   }
 
 }

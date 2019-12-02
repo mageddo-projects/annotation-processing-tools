@@ -11,29 +11,34 @@ import org.apache.commons.lang3.Validate;
 
 public class ElementUtils {
 
-	private static final Set<ElementKind> TYPE_ELEMENTS = new HashSet<>(Arrays.asList(
-		ElementKind.CLASS, ElementKind.INTERFACE, ElementKind.ENUM
-	));
+  private static final Set<ElementKind> TYPE_ELEMENTS = new HashSet<>(Arrays.asList(
+      ElementKind.CLASS, ElementKind.INTERFACE, ElementKind.ENUM
+  ));
 
-	private ElementUtils() {
-	}
+  private ElementUtils() {
+  }
 
-	public static String toClassName(Element element) {
-		Validate.isTrue(
-			isTypeElement(element),
-			"element type must be class but is %s", element.getKind()
-		);
-		if(element.getEnclosingElement() == null){
-			return element.toString();
-		}
-		if(isTypeElement(element.getEnclosingElement())){
-			return String.format("%s\u0024%s", element.getEnclosingElement().toString(), element.getSimpleName());
-		}
-		return element.toString();
-	}
+  public static String toClassName(Element element) {
+    validateTypeElement(element);
+    if (element.getEnclosingElement() == null) {
+      return element.toString();
+    }
+    if (isTypeElement(element.getEnclosingElement())) {
+      return String
+          .format("%s\u0024%s", element.getEnclosingElement().toString(), element.getSimpleName());
+    }
+    return element.toString();
+  }
 
-	private static boolean isTypeElement(Element e){
-		return TYPE_ELEMENTS.contains(e.getKind());
-	}
+  public static void validateTypeElement(Element element) {
+    Validate.isTrue(
+        isTypeElement(element),
+        "element type must be class but is %s", element.getKind()
+    );
+  }
+
+  private static boolean isTypeElement(Element e) {
+    return TYPE_ELEMENTS.contains(e.getKind());
+  }
 
 }

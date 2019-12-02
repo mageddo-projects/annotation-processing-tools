@@ -18,11 +18,14 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.mageddo.aptools.Processor;
 import com.mageddo.aptools.elements.ElementFinder;
+import com.mageddo.aptools.elements.ElementUtils;
 import com.mageddo.aptools.log.Logger;
 import com.mageddo.aptools.log.LoggerFactory;
 import com.mageddo.aptools.util.Predicate;
 import com.sun.source.util.Trees;
 import com.sun.tools.javac.code.Symbol;
+import com.sun.tools.javac.processing.JavacProcessingEnvironment;
+import com.sun.tools.javac.tree.TreeMaker;
 
 import lombok.TextBlock;
 
@@ -30,14 +33,14 @@ public class TextBlockProcessor implements Processor {
   private final Logger logger = LoggerFactory.getLogger();
   private final ProcessingEnvironment processingEnv;
   private final Trees trees;
+  private final TreeMaker treeMaker;
   private final Set<Element> classes;
-  private final VariableTreePathScanner variableTreePathScanner;
 
   public TextBlockProcessor(ProcessingEnvironment processingEnv) {
     this.processingEnv = processingEnv;
     this.classes = new HashSet<>();
     this.trees = Trees.instance(processingEnv);
-    this.variableTreePathScanner = new VariableTreePathScanner();
+    this.treeMaker = TreeMaker.instance(((JavacProcessingEnvironment) processingEnv).getContext());
   }
 
   @Override
@@ -46,9 +49,22 @@ public class TextBlockProcessor implements Processor {
     logger.warn("processingover=%s, tmp: %s", roundEnv.processingOver(), roundEnv.getRootElements());
     for (final Element element : roundEnv.getRootElements()) {
 
-      variableTreePathScanner.scan(this.trees.getPath(element), element);
+      final ClassAnnotatedVariableTreePathScanner apScanner =
+          new ClassAnnotatedVariableTreePathScanner(TextBlock.class);
+      apScanner.scan(this.trees.getPath(element), element);
 
+      System.out.println(apScanner.getVariables());
 
+      ElementUtils.validateTypeElement(element);
+      CompilationUnit compilationUnit = JavaParser.parse(
+          ((Symbol.ClassSymbol) element).sourcefile.openReader(true), true
+      );
+      final ClassAnnotatedVariablesJavaParserScanner javaParserScanner =
+          new ClassAnnotatedVariablesJavaParserScanner(TextBlock.class);
+      compilationUnit.accept(javaParserScanner, compilationUnit);
+
+      VariableMatcher.setupvar(this.treeMaker, apScanner.getVariables(),
+          javaParserScanner.getVariables());
 
       this.classes.add(element);
 

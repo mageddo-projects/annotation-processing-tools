@@ -1,4 +1,4 @@
-package com.mageddo.aptools.textblock;
+package com.mageddo.aptools.textblock.converter;
 
 import java.util.ArrayList;
 import java.util.List;

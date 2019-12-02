@@ -1,4 +1,4 @@
-package com.mageddo.aptools.textblock;
+package com.mageddo.aptools.textblock.converter;
 
 import java.util.Collections;
 import java.util.List;
@@ -7,6 +7,7 @@ import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.VariableDeclarationExpr;
 import com.github.javaparser.ast.stmt.ExpressionStmt;
+import com.mageddo.aptools.textblock.LocalVariable;
 
 public class JavaParserExpressionStmtConverter {
   public static List<LocalVariable> toLocalVariables(ExpressionStmt stm) {

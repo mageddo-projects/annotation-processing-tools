@@ -15,6 +15,8 @@ import com.github.javaparser.ParseException;
 import com.mageddo.aptools.Processor;
 import com.mageddo.aptools.log.Logger;
 import com.mageddo.aptools.log.LoggerFactory;
+import com.mageddo.aptools.textblock.visitor.ClassAnnotatedVariablesJavaParserScanner;
+import com.mageddo.aptools.textblock.visitor.ClassAnnotatedVariablesTreePathScanner;
 import com.sun.source.tree.VariableTree;
 import com.sun.source.util.Trees;
 import com.sun.tools.javac.code.Symbol;
@@ -66,8 +68,8 @@ public class TextBlockProcessor implements Processor {
   }
 
   private List<VariableTree> getClassVars(Element element) {
-    final ClassAnnotatedVariableTreePathScanner apScanner =
-        new ClassAnnotatedVariableTreePathScanner(TEXT_BLOCK_CLASS);
+    final ClassAnnotatedVariablesTreePathScanner apScanner =
+        new ClassAnnotatedVariablesTreePathScanner(TEXT_BLOCK_CLASS);
     apScanner.scan(this.trees.getPath(element), element);
     return apScanner.getVariables();
   }

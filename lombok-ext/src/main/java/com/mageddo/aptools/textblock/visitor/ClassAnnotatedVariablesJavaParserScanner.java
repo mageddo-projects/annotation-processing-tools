@@ -1,4 +1,4 @@
-package com.mageddo.aptools.textblock;
+package com.mageddo.aptools.textblock.visitor;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -7,6 +7,8 @@ import java.util.List;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.mageddo.aptools.textblock.LocalVariable;
+import com.mageddo.aptools.textblock.converter.JavaParserExpressionStmtConverter;
 
 public class ClassAnnotatedVariablesJavaParserScanner extends VoidVisitorAdapter<CompilationUnit> {
 

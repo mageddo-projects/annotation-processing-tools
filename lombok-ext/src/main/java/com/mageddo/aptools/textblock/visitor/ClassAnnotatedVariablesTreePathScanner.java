@@ -1,4 +1,4 @@
-package com.mageddo.aptools.textblock;
+package com.mageddo.aptools.textblock.visitor;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -10,12 +10,12 @@ import com.sun.source.tree.AnnotationTree;
 import com.sun.source.tree.VariableTree;
 import com.sun.source.util.TreePathScanner;
 
-public class ClassAnnotatedVariableTreePathScanner extends TreePathScanner<Object, Element> {
+public class ClassAnnotatedVariablesTreePathScanner extends TreePathScanner<Object, Element> {
 
   private final Class<? extends Annotation> annotation;
   private final List<VariableTree> annotatedVars;
 
-  public ClassAnnotatedVariableTreePathScanner(Class<? extends Annotation> annotation) {
+  public ClassAnnotatedVariablesTreePathScanner(Class<? extends Annotation> annotation) {
     this.annotation = annotation;
     this.annotatedVars = new ArrayList<>();
   }

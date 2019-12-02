@@ -46,59 +46,61 @@ public class TextBlockProcessor implements Processor {
   @Override
   public void process(Set<TypeElement> annotations, RoundEnvironment roundEnv) {
     try {
-    logger.warn("processingover=%s, tmp: %s", roundEnv.processingOver(), roundEnv.getRootElements());
-    for (final Element element : roundEnv.getRootElements()) {
+      logger.warn("processingover=%s, tmp: %s", roundEnv.processingOver(), roundEnv
+          .getRootElements());
+      for (final Element element : roundEnv.getRootElements()) {
 
-      final ClassAnnotatedVariableTreePathScanner apScanner =
-          new ClassAnnotatedVariableTreePathScanner(TextBlock.class);
-      apScanner.scan(this.trees.getPath(element), element);
+        final ClassAnnotatedVariableTreePathScanner apScanner =
+            new ClassAnnotatedVariableTreePathScanner(TextBlock.class);
+        apScanner.scan(this.trees.getPath(element), element);
 
-      System.out.println(apScanner.getVariables());
+        System.out.println(apScanner.getVariables());
 
-      ElementUtils.validateTypeElement(element);
-      CompilationUnit compilationUnit = JavaParser.parse(
-          ((Symbol.ClassSymbol) element).sourcefile.openReader(true), true
-      );
-      final ClassAnnotatedVariablesJavaParserScanner javaParserScanner =
-          new ClassAnnotatedVariablesJavaParserScanner(TextBlock.class);
-      compilationUnit.accept(javaParserScanner, compilationUnit);
+        ElementUtils.validateTypeElement(element);
+        CompilationUnit compilationUnit = JavaParser.parse(
+            ((Symbol.ClassSymbol) element).sourcefile.openReader(true), true
+        );
+        final ClassAnnotatedVariablesJavaParserScanner javaParserScanner =
+            new ClassAnnotatedVariablesJavaParserScanner(TextBlock.class);
+        compilationUnit.accept(javaParserScanner, compilationUnit);
 
-      VariableMatcher.setupvar(this.treeMaker, apScanner.getVariables(),
-          javaParserScanner.getVariables());
+        VariableMatcher.setupvar(this.treeMaker, apScanner.getVariables(),
+            javaParserScanner.getVariables());
 
-      this.classes.add(element);
+        this.classes.add(element);
 
-      final List<Element> textBlockVar = ElementFinder.find(element,
-          textBlockAnnotatedElementPredicate()
-      );
-      List<Element> childs = ElementFinder.find(element, new Predicate<Element>() {
-        @Override
-        public boolean test(Element element) {
-          return true;
-        }
-      });
-      for (Element child : childs) {
-        System.out.printf("child=%s class=%sm childs=%s%n", child, child.getClass(),
-            ElementFilter.fieldsIn(Collections.singleton(child)));
+        final List<Element> textBlockVar = ElementFinder.find(element,
+            textBlockAnnotatedElementPredicate()
+        );
+        List<Element> childs = ElementFinder.find(element, new Predicate<Element>() {
+          @Override
+          public boolean test(Element element) {
+            return true;
+          }
+        });
+        for (Element child : childs) {
+          System.out.printf("child=%s class=%sm childs=%s%n", child, child.getClass(),
+              ElementFilter.fieldsIn(Collections.singleton(child)));
 //        if(child instanceof Symbol.MethodSymbol) {
 //          Symbol.MethodSymbol method = (Symbol.MethodSymbol) child;
 //          System.out.println("=>" + method.loca);
 //        }
 
-      }
-      javaParserMethodToExtractVars(roundEnv, (Symbol.ClassSymbol) element);
+        }
+        javaParserMethodToExtractVars(roundEnv, (Symbol.ClassSymbol) element);
 //      logger.warn("class=%s, textBlockVar=%s, children=%s", element, textBlockVar, childs);
 
-    }
+      }
 
 
       for (Element aClass : classes) {
 //          Symbol.ClassSymbol classSymbol = (Symbol.ClassSymbol) aClass;
 //          System.out.println("members " + classSymbol.members());
-        if(aClass.toString().contains("Person")){
+        if (aClass.toString().contains("Person")) {
 //          System.out.println("deleting Fruit class");
 //          classSymbol.classfile = classSymbol.sourcefile;
-//          /home/typer/dev/projects/annotation-processing-tools/lombok-ext/acceptance-tests/build/classes/java/main/tmp.test
+//          /home/typer/dev/projects/annotation-processing-tools/lombok-ext/acceptance-tests
+//         /build/classes/java/main/tmp.test
 //          FileObject fileObject = processingEnv
 //              .getFiler()
 //              .createResource(
@@ -106,7 +108,8 @@ public class TextBlockProcessor implements Processor {
 //                  "tmp.test"
 //              ).toUri().toString();
 //          final File clazz = new File("/home/typer/dev/projects/annotation-processing-tools" +
-//              "/lombok-ext/acceptance-tests/build/classes/java/main/com/mageddo/lombok/Person.class");
+//              "/lombok-ext/acceptance-tests/build/classes/java/main/com/mageddo/lombok/Person
+//             .class");
 
 //          boolean deleted = clazz.delete();
 //          System.out.printf("%s %s %n", clazz.exists(), deleted);
@@ -147,7 +150,7 @@ public class TextBlockProcessor implements Processor {
         }
       }
 
-    if(roundEnv.processingOver()){
+      if (roundEnv.processingOver()) {
 //      logger.warn("writing to class " + this.classes);
 //      final File clazz = new File("/home/typer/dev/projects/annotation-processing-tools" +
 //          "/lombok-ext/acceptance-tests/build/classes/java/main/com/mageddo/lombok/Person.class");
@@ -168,10 +171,10 @@ public class TextBlockProcessor implements Processor {
 //      System.out.println("classfile: " + lastClassUnit.classfile);
 //      System.out.println(cu.toString());
 
-      for (Element aClass : classes) {
-        if(aClass.toString().contains("Person")){
+        for (Element aClass : classes) {
+          if (aClass.toString().contains("Person")) {
 //          System.out.println("deleting Fruit class");
-          Symbol.ClassSymbol classSymbol = (Symbol.ClassSymbol) aClass;
+            Symbol.ClassSymbol classSymbol = (Symbol.ClassSymbol) aClass;
 ////          classSymbol.classfile = classSymbol.sourcefile;
 
 //          FileObject fileObject = processingEnv
@@ -202,8 +205,8 @@ public class TextBlockProcessor implements Processor {
 //          Writer writer = classSymbol.sourcefile.openWriter();
 //          writer.write(contentBefore);
 //          writer.close();
+          }
         }
-      }
 //      JavaFileObject fruitB = processingEnv
 //          .getFiler()
 //          .createSourceFile("Fruit");
@@ -216,15 +219,16 @@ public class TextBlockProcessor implements Processor {
 //      Writer writer = lastClassUnit.sourcefile.openWriter();
 //      writer.write(cu.toString());
 //      writer.close();
-    }
+      }
 
-    }catch (Exception e){
+    } catch (Exception e) {
 //      logger.error(ExceptionUtils.getStackTrace(e));
       logger.error(e.getMessage());
     }
   }
 
-  private void javaParserMethodToExtractVars(RoundEnvironment roundEnv, Symbol.ClassSymbol element) throws ParseException, IOException {
+  private void javaParserMethodToExtractVars(RoundEnvironment roundEnv,
+      Symbol.ClassSymbol element) throws ParseException, IOException {
     final CompilationUnit cu = JavaParser.parse(element.sourcefile.openReader(true), true);
     recursivePrint(cu);
   }
@@ -236,8 +240,8 @@ public class TextBlockProcessor implements Processor {
     }
   }
 
-  public Predicate<Element> textBlockAnnotatedElementPredicate(){
-    return new Predicate<Element>(){
+  public Predicate<Element> textBlockAnnotatedElementPredicate() {
+    return new Predicate<Element>() {
       @Override
       public boolean test(Element o) {
         return o.getAnnotation(TextBlock.class) != null;

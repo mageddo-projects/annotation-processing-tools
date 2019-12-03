@@ -3,6 +3,9 @@ package com.mageddo.aptools.log;
 import javax.annotation.processing.Messager;
 import javax.tools.Diagnostic.Kind;
 
+/**
+ *
+ */
 public class ApLogger implements Logger {
 
 	private final Messager messager;

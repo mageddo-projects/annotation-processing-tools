@@ -10,8 +10,8 @@ See [an example app](https://github.com/mageddo/graal-reflection-configuration-g
 Gradle dependencies 
 ```groovy
 dependencies {
-  compileOnly("com.mageddo.nativeimage:reflection-config-generator:2.3.2")
-  annotationProcessor("com.mageddo.nativeimage:reflection-config-generator:2.3.2")
+  compileOnly("com.mageddo.nativeimage:reflection-config-generator:2.3.3")
+  annotationProcessor("com.mageddo.nativeimage:reflection-config-generator:2.3.3")
 }
 ```
 

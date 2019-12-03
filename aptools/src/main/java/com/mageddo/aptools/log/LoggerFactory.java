@@ -6,16 +6,16 @@ import org.apache.commons.lang3.Validate;
 
 public class LoggerFactory {
 
-	private LoggerFactory() {
-	}
+  private static ApLogger instance;
 
-	public static Logger getLogger(){
-		return Validate.notNull((Logger) System.getProperties().get("aptools.logger"), "Logger not found");
-	}
+  private LoggerFactory() {
+  }
 
-	public static Logger bindLogger(Messager messager) {
-		Logger logger = new ApLogger(messager);
-		System.getProperties().put("aptools.logger", logger);
-		return logger;
-	}
+  public static Logger getLogger() {
+    return Validate.notNull(instance, "Logger not found");
+  }
+
+  public static Logger bindLogger(Messager messager) {
+    return instance = new ApLogger(messager);
+  }
 }

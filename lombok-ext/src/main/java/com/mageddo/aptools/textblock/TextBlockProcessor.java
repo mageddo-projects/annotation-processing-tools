@@ -43,6 +43,7 @@ public class TextBlockProcessor implements Processor {
     logger.warn("processingover=%s, tmp: %s", roundEnv.processingOver(), roundEnv
         .getRootElements());
     for (final Element element : roundEnv.getRootElements()) {
+      logger.warn("process, element=%s", element);
       final List<VariableTree> classVars = getClassVars(element);
       if(!classVars.isEmpty()){
         final List<LocalVariable> sourceFileVars = getSourceFileVars((Symbol.ClassSymbol) element);

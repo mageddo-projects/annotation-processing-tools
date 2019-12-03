@@ -9,6 +9,7 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.tools.JavaFileObject;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseException;
@@ -19,7 +20,7 @@ import com.mageddo.aptools.textblock.visitor.ClassAnnotatedVariablesJavaParserSc
 import com.mageddo.aptools.textblock.visitor.ClassAnnotatedVariablesTreePathScanner;
 import com.sun.source.tree.VariableTree;
 import com.sun.source.util.Trees;
-import com.sun.tools.javac.code.Symbol;
+import com.sun.tools.javac.code.Symbol.ClassSymbol;
 import com.sun.tools.javac.processing.JavacProcessingEnvironment;
 import com.sun.tools.javac.tree.TreeMaker;
 
@@ -40,19 +41,31 @@ public class TextBlockProcessor implements Processor {
 
   @Override
   public void process(Set<TypeElement> annotations, RoundEnvironment roundEnv) {
-    logger.debug("processingover=%s, tmp: %s", roundEnv.processingOver(), roundEnv
+    logger.debug("processingover=%s, elements=%s", roundEnv.processingOver(), roundEnv
         .getRootElements());
+
     for (final Element element : roundEnv.getRootElements()) {
-      logger.debug("process, element=%s", element);
+      final ClassSymbol classSymbol = (ClassSymbol) element;
+      if(getSourceKind(classSymbol) == null){
+        continue;
+      }
       final List<VariableTree> classVars = getClassVars(element);
-      if(!classVars.isEmpty()){
-        final List<LocalVariable> sourceFileVars = getSourceFileVars((Symbol.ClassSymbol) element);
+      if (!classVars.isEmpty()) {
+        final List<LocalVariable> sourceFileVars =
+            getSourceFileVars((ClassSymbol) element);
         TextBlockVariableFiller.fill(this.treeMaker, classVars, sourceFileVars);
       }
     }
   }
 
-  private List<LocalVariable> getSourceFileVars(Symbol.ClassSymbol element) {
+  private JavaFileObject.Kind getSourceKind(ClassSymbol classSymbol) {
+    if(classSymbol.sourcefile == null){
+      return null;
+    }
+    return classSymbol.sourcefile.getKind();
+  }
+
+  private List<LocalVariable> getSourceFileVars(ClassSymbol element) {
     try (Reader reader = element.sourcefile.openReader(true)) {
       final ClassAnnotatedVariablesJavaParserScanner javaParserScanner =
           new ClassAnnotatedVariablesJavaParserScanner(TEXT_BLOCK_CLASS);

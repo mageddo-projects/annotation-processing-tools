@@ -3,8 +3,6 @@ dependencies {
   compile(project(":reflection-config-generator"))
   compile("commons-io:commons-io:2.6")
   compile("com.github.javaparser:javaparser-core:2.4.0")
-  compile("org.projectlombok:lombok:1.18.10")
-
   compile("org.apache.commons:commons-lang3:3.9")
   compileOnly files(org.gradle.internal.jvm.Jvm.current().toolsJar)
 

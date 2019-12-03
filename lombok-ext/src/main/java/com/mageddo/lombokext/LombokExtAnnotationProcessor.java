@@ -33,7 +33,6 @@ public class LombokExtAnnotationProcessor extends AbstractProcessor {
     this.logger = LoggerFactory.bindLogger(this.processingEnv.getMessager());
     this.processors = new ArrayList<>();
     this.processors.add(new TextBlockProcessor(processingEnv));
-
   }
 
   @Override

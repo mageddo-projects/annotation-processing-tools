@@ -7,7 +7,7 @@ dependencies {
   compileOnly(project(":lombok-ext"))
   annotationProcessor(project(":lombok-ext"))
 
-  testCompileOnly(project(":lombok-ext"))
+  testCompile(project(":lombok-ext"))
   testAnnotationProcessor(project(":lombok-ext"))
 
   compile("com.fasterxml.jackson.core:jackson-databind:2.10.1")

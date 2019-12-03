@@ -9,7 +9,7 @@ class FruitDAOTest {
   private final FruitDAO fruitDAO = new FruitDAO();
 
   @Test
-  void mustGenerateTextBlockForFruitSql(){
+  void mustGenerateTextBlockForLocalVariablesButNotForFields(){
     // arrange
 
     // act

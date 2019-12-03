@@ -13,6 +13,10 @@ import com.mageddo.aptools.textblock.LocalVariable;
 import com.mageddo.aptools.textblock.converter.JavaParserAnnotationConverter;
 import com.mageddo.aptools.textblock.converter.JavaParserExpressionStmtConverter;
 
+import org.apache.commons.lang3.Validate;
+
+import lombok.TextBlock;
+
 public class ClassAnnotatedVariablesJavaParserScanner extends VoidVisitorAdapter<CompilationUnit> {
 
   private final Class<? extends Annotation> annotation;
@@ -31,6 +35,8 @@ public class ClassAnnotatedVariablesJavaParserScanner extends VoidVisitorAdapter
           .setAnnotations(JavaParserAnnotationConverter.toAnnotationNames(n.getAnnotations()))
           .setComment(getComment(n, variable));
       if(localVariable.getAnnotations().contains(annotation.getSimpleName())){
+        Validate.isTrue(localVariable.getComment() != null,
+            "@" + TextBlock.class.getSimpleName() + "fields must have comments: " + variable);
         this.variables.add(localVariable);
       }
     }
@@ -60,6 +66,6 @@ public class ClassAnnotatedVariablesJavaParserScanner extends VoidVisitorAdapter
     } else if(field.getComment() != null){
       return field.getComment().getContent();
     }
-    throw new IllegalStateException("@TextBlock fields must have comments: " + field);
+    return null;
   }
 }

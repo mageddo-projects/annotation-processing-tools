@@ -6,7 +6,7 @@ public final class TextBlocks {
 	}
 
 	/**
-	 * This method requires RSL to work otherwise an exception will be thrown
+	 * This method requires Lombok Ext to work otherwise an exception will be thrown
 	 *
 	 * @throws IllegalStateException if Lombok didn't inject the variable
 	 * @return Throws an exception if called

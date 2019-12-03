@@ -6,18 +6,18 @@ import java.util.List;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.VariableDeclarationExpr;
-import com.github.javaparser.ast.stmt.ExpressionStmt;
+import com.github.javaparser.ast.stmt.Statement;
 import com.mageddo.aptools.textblock.LocalVariable;
 
 public class JavaParserExpressionStmtConverter {
-  public static List<LocalVariable> toLocalVariables(ExpressionStmt stm) {
+  public static List<LocalVariable> toLocalVariables(Statement stm) {
     for (Node node : stm.getChildrenNodes()) {
       if (node instanceof VariableDeclarationExpr) {
         final VariableDeclarationExpr varDeclar = (VariableDeclarationExpr) node;
         for (final VariableDeclarator var : varDeclar.getVars()) {
             return Collections.singletonList(new LocalVariable()
                 .setName(var.getId().getName())
-                .setComment(stm.getComment().getContent())
+                .setComment(getComment(stm))
                 .setAnnotations(JavaParserAnnotationConverter.toAnnotationNames(varDeclar.getAnnotations()))
             );
           }
@@ -40,6 +40,9 @@ public class JavaParserExpressionStmtConverter {
   private static String getComment(Node node) {
     if(node.getComment() != null){
       return node.getComment().getContent();
+    }
+    if(node.getParentNode() == null){
+      return null;
     }
     if(node.getParentNode().getComment() != null){
       return node.getParentNode().getComment().getContent();

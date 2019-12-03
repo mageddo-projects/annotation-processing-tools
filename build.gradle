@@ -57,9 +57,3 @@ configure([
 ]){
   apply from: "${rootProject.rootDir}/nexus.gradle"
 }
-
-task version(){
-  doLast {
-    println(project.version)
-  }
-}

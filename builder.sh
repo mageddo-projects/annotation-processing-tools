@@ -14,7 +14,7 @@ case $1 in
 
 	deploy )
 
-		APP_VERSION=$(./gradlew -q version)
+		APP_VERSION=$(cat gradle.properties | grep version= | awk -F '=' '{print $2}')
 		echo "> deploying ${APP_VERSION}"
 
 		validateRelease $APP_VERSION

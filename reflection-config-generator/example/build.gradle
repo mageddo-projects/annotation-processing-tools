@@ -11,8 +11,8 @@ sourceCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
 
-	compileOnly("com.mageddo.nativeimage:reflection-config-generator:2.3.3")
-	annotationProcessor("com.mageddo.nativeimage:reflection-config-generator:2.3.3")
+	compileOnly("com.mageddo.nativeimage:reflection-config-generator:2.3.4")
+	annotationProcessor("com.mageddo.nativeimage:reflection-config-generator:2.3.4")
 
 	compile ("com.fasterxml.jackson.core:jackson-databind:2.10.1")
 }

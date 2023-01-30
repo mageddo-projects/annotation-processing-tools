@@ -42,3 +42,18 @@ it will automatically configure reflection for `Fruit` props when compiling usin
   }
 ]
 ```
+
+## Generation reflection to external library jars
+As annotation processing only can process source code, if you need to generate a reflection json file to an external 
+jar, you can do as follows:
+
+Download [reflection-config-generator latest release jar][1] then run something like:
+```bash
+$ java -cp "your.jar:reflection-config-generator.jar" nativeimage.core.thirdparty.Main com.acme /tmp/tmp.json
+
+generating reflect..., package=com.acme,  options=[com.github.dockerjava.api.model, /tmp/tmp.json]
+generated!, package=com.acme, objects=148, writtenTo=/tmp/tmp.json
+```
+
+[1]: https://github.com/mageddo-projects/annotation-processing-tools/releases?q=reflection-config-generator&expanded=true
+

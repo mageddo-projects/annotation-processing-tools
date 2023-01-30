@@ -2,6 +2,8 @@ package com.mageddo.aptools;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class ClassUtils {
 	private ClassUtils() {
 	}
@@ -31,6 +33,7 @@ public class ClassUtils {
 	}
 
 	public static boolean doClassOwnPossibleSubClassOrIsTheSame(String expected, String current) {
-		return current.startsWith(expected); // todo talvez tenha que ser melhor validado
+		// todo talvez tenha que ser melhor validado
+		return StringUtils.trimToEmpty(current).startsWith(expected);
 	}
 }

@@ -22,31 +22,32 @@ import sun.reflect.annotation.AnnotationParser;
 class TypeBuilderTest {
 
 	@Test
-	void mustMapScanClassName() {
+	void mustMapScanClassNameWhenClassNotSet() {
 		// arrange
 
+		final String expectedClassName = Pojo.class.getName();
 		final Map<String, Object> params = new LinkedHashMap<>();
-		params.put("scanClassName", Pojo.class.getName());
-		params.put("scanClass", Set.class);
+		params.put("scanClassName", expectedClassName);
+		params.put("scanClass", Void.class);
 
 		final Reflection ann = (Reflection) AnnotationParser.annotationForMap(
 			Reflection.class, params
 		);
 
 		// act
-		final Set<String> classes = TypeBuilder.of(ann, null);
+		final Set<String> classes = TypeBuilder.of(ann, expectedClassName);
 
 		// assert
 		assertEquals(1, classes.size());
-		assertEquals(Pojo.class.getName(), classes.iterator().next());
+		assertEquals(expectedClassName, classes.iterator().next());
 	}
 
 	@Test
 	void mustMapScanClass() {
 		// arrange
-
+		final String expectedClassName = Pojo.class.getName();
 		final Map<String, Object> params = new LinkedHashMap<>();
-		params.put("scanClassName", "");
+		params.put("scanClassName", Map.class.getName());
 		params.put("scanClass", Pojo.class);
 
 		final Reflection ann = (Reflection) AnnotationParser.annotationForMap(
@@ -54,7 +55,7 @@ class TypeBuilderTest {
 		);
 
 		// act
-		final Set<String> classes = TypeBuilder.of(ann, null);
+		final Set<String> classes = TypeBuilder.of(ann, expectedClassName);
 
 		// assert
 		assertEquals(1, classes.size());

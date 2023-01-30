@@ -55,5 +55,11 @@ generating reflect..., package=com.acme,  options=[com.github.dockerjava.api.mod
 generated!, package=com.acme, objects=148, writtenTo=/tmp/tmp.json
 ```
 
+See available options by running 
+
+```bash
+$ java -jar reflection-config-generator.jar --help
+```
+
 [1]: https://github.com/mageddo-projects/annotation-processing-tools/releases?q=reflection-config-generator&expanded=true
 

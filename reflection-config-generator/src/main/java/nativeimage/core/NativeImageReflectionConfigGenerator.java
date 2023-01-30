@@ -17,9 +17,11 @@ import com.mageddo.aptools.elements.ElementUtils;
 import com.mageddo.aptools.log.Logger;
 import com.mageddo.aptools.log.LoggerFactory;
 
+import org.apache.commons.lang3.StringUtils;
+
+import static com.mageddo.aptools.elements.ElementUtils.toClassName;
 import nativeimage.Reflection;
 import nativeimage.Reflections;
-import static com.mageddo.aptools.elements.ElementUtils.toClassName;
 import static nativeimage.core.NativeImages.solvePath;
 import nativeimage.core.domain.ReflectionConfig;
 import nativeimage.core.io.NativeImagePropertiesWriter;
@@ -135,10 +137,9 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 	private Element chooseElement(
 			Element element, Reflection reflection, RoundEnvironment roundEnv
 	) {
-		if (!ReflectionUtils.isVoid(reflection)) {
-			return this.findElementAndNested(ClassUtils.getName(reflection.scanClass()), roundEnv);
-		} else if (!reflection.scanClassName().isEmpty()) {
-			return this.findElementAndNested(reflection.scanClassName(), roundEnv);
+		final String className = ReflectionUtils.getClassName(reflection);
+		if (StringUtils.isNotBlank(className)) {
+			return this.findElementAndNested(className, roundEnv);
 		}
 		return element;
 	}

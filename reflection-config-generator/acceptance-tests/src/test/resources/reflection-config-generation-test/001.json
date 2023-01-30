@@ -7,7 +7,31 @@
   "allPublicFields" : false,
   "allDeclaredFields" : true
 }, {
+  "name" : "com.acme.ClassWithNestedClass",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false
+}, {
+  "name" : "com.acme.ClassWithNestedClass$NestedClass",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false
+}, {
   "name" : "com.acme.Fruit",
+  "allDeclaredConstructors" : true,
+  "allPublicConstructors" : true,
+  "allDeclaredMethods" : true,
+  "allPublicMethods" : true,
+  "allPublicFields" : true,
+  "allDeclaredFields" : true
+}, {
+  "name" : "com.acme.Fruit$ShouldNotScan",
   "allDeclaredConstructors" : true,
   "allPublicConstructors" : true,
   "allDeclaredMethods" : true,

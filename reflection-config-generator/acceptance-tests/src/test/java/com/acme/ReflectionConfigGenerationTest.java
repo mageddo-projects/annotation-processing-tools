@@ -29,7 +29,7 @@ class ReflectionConfigGenerationTest {
 		final List<JsonNode> items = readReflectConfig();
 
 		// assert
-		assertEquals(11, items.size());
+		assertEquals(13, items.size());
 		assertEquals(getResourceAsString("/reflection-config-generation-test/001.json"), objectMapper.writeValueAsString(items));
 	}
 

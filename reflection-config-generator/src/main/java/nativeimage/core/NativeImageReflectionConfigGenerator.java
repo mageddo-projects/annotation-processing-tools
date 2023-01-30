@@ -168,8 +168,6 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 	}
 
 	private void addElement(Element element, Reflection annotation) {
-//		final Symbol.ClassSymbol symbol = (Symbol.ClassSymbol) element;
-//		((Symbol.ClassSymbol) element).sourcefile.de
 		logger.debug(
 				"m=addElement, asType=%s, kind=%s, simpleName=%s, enclosing=%s, clazz=%s",
 				element.asType(), element.getKind(), element.getSimpleName(),
@@ -184,9 +182,13 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 	}
 
 	private void writeObjects() {
+
 		final String classPackage = this.getClassPackage();
 		final String reflectFile = solvePath(classPackage, "reflect.json");
 		final String reflectFileThirdParty = solvePath(classPackage, "reflect-third-party.json");
+
+		this.subtractSourceFromThirdPartyClass();
+
 		try (
 				ReflectionConfigWriter appender =
 						new ReflectionConfigWriter(this.processingEnv, reflectFile);
@@ -211,6 +213,10 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	boolean subtractSourceFromThirdPartyClass() {
+		return this.classes.removeAll(this.thirdPartyClasses);
 	}
 
 	private String getClassPackage() {

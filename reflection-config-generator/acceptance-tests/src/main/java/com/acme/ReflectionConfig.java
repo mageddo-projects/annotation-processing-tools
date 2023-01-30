@@ -22,10 +22,6 @@ import nativeimage.Reflections;
 		@Reflection(
 				scanPackage = "com.acme.subpackage",
 				declaredFields = true
-		),
-		@Reflection(
-				scanPackage = "com.fasterxml.jackson.core.util",
-				scanLibs = true
 		)
 })
 public class ReflectionConfig {

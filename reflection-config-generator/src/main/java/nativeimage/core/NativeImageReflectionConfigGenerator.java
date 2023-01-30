@@ -26,7 +26,6 @@ import static nativeimage.core.NativeImages.solvePath;
 import nativeimage.core.domain.ReflectionConfig;
 import nativeimage.core.io.NativeImagePropertiesWriter;
 import nativeimage.core.io.ReflectionConfigWriter;
-import static nativeimage.core.thirdparty.ThirdPartyPackageScanner.findPackageClasses;
 
 /**
  * Will generate native image reflection config to project source classes.
@@ -36,13 +35,11 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 	private final Logger log = LoggerFactory.getLogger();
 	private final ProcessingEnvironment processingEnv;
 	private final Set<ReflectionConfig> classes;
-	private final Set<ReflectionConfig> thirdPartyClasses;
 	private String classPackage;
 
 	public NativeImageReflectionConfigGenerator(ProcessingEnvironment processingEnv) {
 		this.processingEnv = processingEnv;
 		this.classes = new LinkedHashSet<>();
-		this.thirdPartyClasses = new LinkedHashSet<>();
 	}
 
 	@Override
@@ -79,42 +76,9 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 			RoundEnvironment roundEnv, Element element, Reflection reflection
 	) {
 		log.debug(
-				"m=processElementsForAnnotation, scanLibs=%b, reflection=%s",
-				reflection.scanLibs(), reflection
+				"m=processElementsForAnnotation, reflection=%s", reflection
 		);
-		if (reflection.scanLibs()) {
-			this.addMatchingProjectLibsClasses(reflection);
-		} else {
-			this.addMatchingProjectSourceElements(roundEnv, element, reflection);
-		}
-	}
-
-	void addMatchingProjectLibsClasses(Reflection reflection) {
-		if (reflection.scanPackage().isEmpty()) {
-			this.addClassAndNested(reflection, ReflectionUtils.getClassName(reflection));
-		} else {
-			final Set<String> classes = findPackageClasses(reflection.scanPackage());
-			for (final String clazz : classes) {
-				this.addClass(clazz, reflection);
-			}
-		}
-	}
-
-	void addClassAndNested(Reflection reflection, String clazz) {
-		this.addClass(clazz, reflection);
-		for (final String innerClass : ClassUtils.findNestClasses(clazz)) {
-			this.addClass(innerClass, reflection);
-			log.debug("m=addMatchingProjectLibsClasses, innerClass=%s", innerClass);
-		}
-	}
-
-	void addClass(String clazz, Reflection reflection) {
-		log.debug("m=addClass, clazz=%s", clazz, clazz);
-		// todo check if the name is correct
-		for (final ReflectionConfig config : ReflectionConfigBuilder.of(reflection, clazz)) {
-			this.thirdPartyClasses.remove(config);
-			this.thirdPartyClasses.add(config);
-		}
+		this.addMatchingProjectSourceElements(roundEnv, element, reflection);
 	}
 
 	void addMatchingProjectSourceElements(
@@ -185,36 +149,25 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 		final String reflectFile = solvePath(classPackage, "reflect.json");
 		final String reflectFileThirdParty = solvePath(classPackage, "reflect-third-party.json");
 
-		this.subtractSourceFromThirdPartyClass();
-
 		try (
 				ReflectionConfigWriter appender =
 						new ReflectionConfigWriter(this.processingEnv, reflectFile);
-
-				ReflectionConfigWriter appenderThirdParty =
-						new ReflectionConfigWriter(this.processingEnv, reflectFileThirdParty)
 		) {
 
 			appender.writeAll(this.classes);
-			appenderThirdParty.writeAll(this.thirdPartyClasses);
 
 			final URI nativeImageFile = NativeImagePropertiesWriter.write(
 					this.processingEnv, classPackage, reflectFile, reflectFileThirdParty
 			);
 			log.info(
-					"status=reflect-generation-done, objects=%d, 3rdObjects=%s, path=%s",
-					this.classes.size(), this.thirdPartyClasses.size(), nativeImageFile
+					"status=reflect-generation-done, objects=%d, path=%s",
+					this.classes.size(), nativeImageFile
 			);
 
 			log.debug("objects=%s", this.classes);
-			log.debug("3rdObjects=%s", this.classes);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	boolean subtractSourceFromThirdPartyClass() {
-		return this.classes.removeAll(this.thirdPartyClasses);
 	}
 
 	private String getClassPackage() {

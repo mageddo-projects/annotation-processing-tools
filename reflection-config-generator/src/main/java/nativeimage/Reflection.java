@@ -67,9 +67,4 @@ public @interface Reflection {
    */
   boolean declaredFields() default false;
 
-  /**
-   * If must scan for package or class in project libs instead of in the source.
-   */
-  boolean scanLibs() default false;
-
 }

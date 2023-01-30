@@ -57,7 +57,7 @@ public class Main {
 				writer.write(toReflectionConfig(clazz));
 			}
 			System.out.printf(
-					"package=%s, objects=%d, writtenTo=%s%n",
+					"generated!, package=%s, objects=%d, writtenTo=%s%n",
 					packageName, classes.size(), outFilePath
 			);
 		}

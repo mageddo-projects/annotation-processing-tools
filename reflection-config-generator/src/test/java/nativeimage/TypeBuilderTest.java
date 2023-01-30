@@ -1,21 +1,23 @@
 package nativeimage;
 
-import com.mageddo.aptools.elements.ElementUtils;
-import nativeimage.core.TypeBuilder;
-import nativeimage.vo.Pojo;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import sun.reflect.annotation.AnnotationParser;
-
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.Name;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Name;
+
+import com.mageddo.aptools.elements.ElementUtils;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import nativeimage.core.TypeBuilder;
+import nativeimage.vo.Pojo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
+import sun.reflect.annotation.AnnotationParser;
 
 class TypeBuilderTest {
 
@@ -32,7 +34,7 @@ class TypeBuilderTest {
 		);
 
 		// act
-		final Set<String> classes = TypeBuilder.of(ann, ElementUtils.toClassName(null));
+		final Set<String> classes = TypeBuilder.of(ann, null);
 
 		// assert
 		assertEquals(1, classes.size());
@@ -52,7 +54,7 @@ class TypeBuilderTest {
 		);
 
 		// act
-		final Set<String> classes = TypeBuilder.of(ann, ElementUtils.toClassName(null));
+		final Set<String> classes = TypeBuilder.of(ann, null);
 
 		// assert
 		assertEquals(1, classes.size());

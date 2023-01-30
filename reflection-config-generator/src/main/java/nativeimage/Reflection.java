@@ -17,54 +17,54 @@ import java.lang.annotation.Target;
 //@Repeatable(value = RuntimeReflections.class)
 public @interface Reflection {
 
-  /**
-   * The package to be scanned to generate reflection config, e.g <code>java.lang</code>
-   */
-  String scanPackage() default "";
+	/**
+	 * The package to be scanned to generate reflection config, e.g <code>java.lang</code>
+	 */
+	String scanPackage() default "";
 
-  /**
-   * The class to be scanned to generate reflection config
-   */
-  Class scanClass() default Void.class;
+	/**
+	 * The class to be scanned to generate reflection config
+	 */
+	Class scanClass() default Void.class;
 
-  /**
-   * The class name to be scanned to generate reflection config, e.g <code>java.lang.String</code>
-   */
-  String scanClassName() default "";
+	/**
+	 * The class name to be scanned to generate reflection config, e.g <code>java.lang.String</code>
+	 */
+	String scanClassName() default "";
 
-  /**
-   * {@link #declaredConstructors()}, {@link #publicConstructors()} and &lt;init&gt; together
-   */
-  boolean constructors() default false;
+	/**
+	 * {@link #declaredConstructors()}, {@link #publicConstructors()} and &lt;init&gt; together
+	 */
+	boolean constructors() default false;
 
-  /**
-   * aka allDeclaredConstructors
-   */
-  boolean declaredConstructors() default false;
+	/**
+	 * aka allDeclaredConstructors
+	 */
+	boolean declaredConstructors() default false;
 
-  /**
-   * aka allPublicConstructors
-   */
-  boolean publicConstructors() default false;
+	/**
+	 * aka allPublicConstructors
+	 */
+	boolean publicConstructors() default false;
 
-  /**
-   * aka allDeclaredMethods
-   */
-  boolean declaredMethods() default false;
+	/**
+	 * aka allDeclaredMethods
+	 */
+	boolean declaredMethods() default false;
 
-  /**
-   * aka allPublicMethods
-   */
-  boolean publicMethods() default false;
+	/**
+	 * aka allPublicMethods
+	 */
+	boolean publicMethods() default false;
 
-  /**
-   * aka allPublicFields
-   */
-  boolean publicFields() default false;
+	/**
+	 * aka allPublicFields
+	 */
+	boolean publicFields() default false;
 
-  /**
-   * aka allDeclaredFields
-   */
-  boolean declaredFields() default false;
+	/**
+	 * aka allDeclaredFields
+	 */
+	boolean declaredFields() default false;
 
 }

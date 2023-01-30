@@ -147,7 +147,8 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 	private void writeObjects() {
 
 		final String classPackage = this.getClassPackage();
-		final String reflectFile = solvePath(classPackage, "reflect.json");
+		final String fileName = "reflect.json";
+		final String reflectFile = solvePath(classPackage, fileName);
 
 		try (
 				ReflectionConfigWriter appender =
@@ -157,7 +158,7 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 			appender.writeAll(this.classes);
 
 			final URI nativeImageFile = NativeImagePropertiesWriter.write(
-					this.processingEnv, classPackage, reflectFile
+					this.processingEnv, classPackage, fileName
 			);
 			log.info(
 					"status=reflect-generation-done, objects=%d, path=%s",

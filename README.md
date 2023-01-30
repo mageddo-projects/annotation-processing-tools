@@ -5,7 +5,7 @@ A set of useful tools when creating annotation processing libs
 * Adds support to Text Blocks
 
 ## [Reflection Config Generator][2]
-* Automatically generates [json reflect config][3] for specified classes or entire packages.   
+* Automatically generates [json reflect config][3] for specified classes or entire packages.
 
 ## Requirements
 * Java 7+

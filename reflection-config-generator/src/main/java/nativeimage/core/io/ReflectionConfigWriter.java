@@ -1,4 +1,4 @@
-package nativeimage.core;
+package nativeimage.core.io;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -10,8 +10,9 @@ import javax.tools.FileObject;
 
 import com.fasterxml.jackson.databind.SequenceWriter;
 
-import static nativeimage.core.ReflectionConfigFileCreator.buildFileObject;
-import static nativeimage.core.ReflectionConfigFileCreator.createReflectionConfigWriter;
+import static nativeimage.core.io.ReflectionConfigFileCreator.buildFileObject;
+import static nativeimage.core.io.ReflectionConfigFileCreator.createReflectionConfigWriter;
+import nativeimage.core.ReflectionConfigAppender;
 import nativeimage.core.domain.ReflectionConfig;
 
 public class ReflectionConfigWriter implements ReflectionConfigAppender, Closeable {

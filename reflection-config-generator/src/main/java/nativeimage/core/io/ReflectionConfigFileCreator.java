@@ -1,4 +1,4 @@
-package nativeimage.core;
+package nativeimage.core.io;
 
 import java.io.IOException;
 

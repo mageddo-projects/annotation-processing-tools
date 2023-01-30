@@ -2,6 +2,7 @@ package com.mageddo.aptools.elements;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.lang.model.element.Element;
@@ -41,4 +42,7 @@ public class ElementUtils {
     return TYPE_ELEMENTS.contains(e.getKind());
   }
 
+	public static boolean isEquals(Element element, String className) {
+		return Objects.equals(ElementUtils.toClassName(element), className);
+	}
 }

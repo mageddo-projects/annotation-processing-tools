@@ -40,4 +40,7 @@ public class ElementFinder {
     }
   }
 
+	public static List<Element> findNestedClasses(Element element) {
+		return find(element, ElementKind.CLASS);
+	}
 }

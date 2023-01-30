@@ -7,6 +7,8 @@ import javax.lang.model.type.MirroredTypeException;
 
 import com.mageddo.aptools.ClassUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import nativeimage.Reflection;
 
 public final class TypeBuilder {
@@ -16,15 +18,16 @@ public final class TypeBuilder {
 	}
 
 	public static Set<String> of(Reflection reflectionAnn, String clazzName) {
-		if(!reflectionAnn.scanClassName().equals("")){
-			return toSet(reflectionAnn.scanClassName());
+		final String expectedClassName = StringUtils.firstNonBlank(
+				getScanClass(reflectionAnn), reflectionAnn.scanClassName()
+		);
+		if(StringUtils.isNotBlank(expectedClassName)){
+			if(ClassUtils.doClassOwnPossibleSubClassOrIsTheSame(expectedClassName, clazzName)){
+				return toSet(clazzName);
+			}
 		}
-		final String scanClass = getScanClass(reflectionAnn);
-		if(!scanClass.equals(Void.class.getName())){
-			return toSet(scanClass);
-		}
-		if(!reflectionAnn.scanPackage().equals("")){
-			if(ClassUtils.doPackageOwnClass(reflectionAnn.scanPackage(), clazzName)){
+		if (StringUtils.isNotEmpty(reflectionAnn.scanPackage())) {
+			if (ClassUtils.doPackageOwnClass(reflectionAnn.scanPackage(), clazzName)) {
 				return toSet(clazzName);
 			}
 			return Collections.emptySet();
@@ -33,9 +36,12 @@ public final class TypeBuilder {
 	}
 
 	private static String getScanClass(Reflection reflectionAnn) {
+		if (reflectionAnn.scanClass() == Void.class) {
+			return null;
+		}
 		try {
 			return reflectionAnn.scanClass().getName();
-		} catch (MirroredTypeException e){
+		} catch (MirroredTypeException e) {
 			return e.getTypeMirror().toString();
 		}
 	}

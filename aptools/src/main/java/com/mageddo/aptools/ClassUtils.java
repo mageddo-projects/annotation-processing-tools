@@ -29,4 +29,8 @@ public class ClassUtils {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public static boolean doClassOwnPossibleSubClassOrIsTheSame(String expected, String current) {
+		return current.startsWith(expected); // todo talvez tenha que ser melhor validado
+	}
 }

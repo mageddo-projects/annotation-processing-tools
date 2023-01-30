@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 
 import com.mageddo.aptools.ClassUtils;
@@ -20,8 +19,11 @@ import com.mageddo.aptools.log.LoggerFactory;
 
 import nativeimage.Reflection;
 import nativeimage.Reflections;
-import nativeimage.core.domain.ReflectionConfig;
+import static com.mageddo.aptools.elements.ElementUtils.toClassName;
 import static nativeimage.core.NativeImages.solvePath;
+import nativeimage.core.domain.ReflectionConfig;
+import nativeimage.core.io.NativeImagePropertiesWriter;
+import nativeimage.core.io.ReflectionConfigWriter;
 import static nativeimage.thirdparty.ThirdPartyPackageScanner.findPackageClasses;
 
 /**
@@ -115,19 +117,52 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 		}
 	}
 
-	void addMatchingProjectSourceElements(RoundEnvironment roundEnv, Element element,
-			Reflection reflection) {
+	void addMatchingProjectSourceElements(
+			RoundEnvironment roundEnv, Element element, Reflection reflection
+	) {
 		if (reflection.scanPackage().isEmpty()) {
-			this.addElement(element, reflection);
-			// todo must add nested classes too
+			final Element found = this.chooseElement(element, reflection, roundEnv);
+			if (found != null) {
+				this.addToElementAndNested(reflection, found);
+			}
 		} else {
 			for (final Element nestedElement : roundEnv.getRootElements()) {
-				this.addElement(nestedElement, reflection);
-				for (final Element innerClass : ElementFinder.find(nestedElement, ElementKind.CLASS)) {
-					this.addElement(innerClass, reflection);
-					logger.debug("m=addMatchingProjectSourceElements, innerClass=%s", innerClass);
+				this.addToElementAndNested(reflection, nestedElement);
+			}
+		}
+	}
+
+	private Element chooseElement(
+			Element element, Reflection reflection, RoundEnvironment roundEnv
+	) {
+		if (reflection.scanClass() != Void.class) {
+			return this.findElementAndNested(reflection.scanClass().getName(), roundEnv);
+		} else if (!reflection.scanClassName().isEmpty()) {
+			return this.findElementAndNested(reflection.scanClassName(), roundEnv);
+		}
+		return element;
+	}
+
+	private Element findElementAndNested(String className, RoundEnvironment roundEnv) {
+		for (Element element : roundEnv.getRootElements()) {
+			if (ElementUtils.isEquals(element, className)) {
+				return element;
+			}
+			for (Element nestedClass : ElementFinder.findNestedClasses(element)) {
+				if (ElementUtils.isEquals(element, className)) {
+					return nestedClass;
 				}
 			}
+		}
+		logger.info("status=classNotFound, class={}", className);
+		return null;
+	}
+
+	private void addToElementAndNested(Reflection reflection, Element element) {
+		this.addElement(element, reflection);
+		for (final Element innerClass : ElementFinder.findNestedClasses(element)) {
+			this.addElement(innerClass, reflection);
+			logger.debug("m=addMatchingProjectSourceElements, innerClass=%s", innerClass);
 		}
 	}
 
@@ -141,8 +176,7 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 		);
 		this.classPackage = this.classPackage == null ?
 				ClassUtils.getClassPackage(element.toString()) : this.classPackage;
-		for (ReflectionConfig config : ReflectionConfigBuilder.of(annotation,
-				ElementUtils.toClassName(element))) {
+		for (ReflectionConfig config : ReflectionConfigBuilder.of(annotation, toClassName(element))) {
 			this.classes.remove(config);
 			this.classes.add(config);
 		}

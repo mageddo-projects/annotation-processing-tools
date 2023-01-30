@@ -1,18 +1,18 @@
 package com.acme;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import org.junit.jupiter.api.Test;
+
 import static com.acme.TestUtils.getResourceAsString;
-import static com.acme.TestUtils.sortJson;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ReflectionConfigGenerationTest {
@@ -29,7 +29,7 @@ class ReflectionConfigGenerationTest {
 		final List<JsonNode> items = readReflectConfig();
 
 		// assert
-		assertEquals(10, items.size());
+		assertEquals(11, items.size());
 		assertEquals(getResourceAsString("/reflection-config-generation-test/001.json"), objectMapper.writeValueAsString(items));
 	}
 

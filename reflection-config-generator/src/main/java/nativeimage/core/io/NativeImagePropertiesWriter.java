@@ -1,4 +1,4 @@
-package nativeimage.core;
+package nativeimage.core.io;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -9,6 +9,8 @@ import javax.tools.FileObject;
 import javax.tools.StandardLocation;
 
 import com.mageddo.aptools.IoUtils;
+
+import nativeimage.core.NativeImages;
 
 public class NativeImagePropertiesWriter {
 	public static URI write(

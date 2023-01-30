@@ -10,7 +10,7 @@ public class ClassUtils {
 
 	public static String getClassPackage(String className) {
 		final int lastIndexOf = className.lastIndexOf('.');
-		if(lastIndexOf < 0){
+		if (lastIndexOf < 0) {
 			return className;
 		}
 		return className.substring(0, lastIndexOf);
@@ -20,7 +20,7 @@ public class ClassUtils {
 		return getClassPackage(className).contains(packageName);
 	}
 
-	public static List<Class<?>> findNestClasses(Class<?> clazz){
+	public static List<Class<?>> findNestClasses(Class<?> clazz) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -35,5 +35,13 @@ public class ClassUtils {
 	public static boolean doClassOwnPossibleSubClassOrIsTheSame(String expected, String current) {
 		// todo talvez tenha que ser melhor validado
 		return StringUtils.trimToEmpty(current).startsWith(expected);
+	}
+
+	public static boolean isAssignableFrom(Class a, Class b) {
+		return a.isAssignableFrom(b);
+	}
+
+	public static String getName(Class clazz) {
+		return clazz.getName();
 	}
 }

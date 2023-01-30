@@ -17,8 +17,6 @@ import com.mageddo.aptools.Processor;
 import com.mageddo.aptools.log.Logger;
 import com.mageddo.aptools.log.LoggerFactory;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
 import nativeimage.core.NativeImageReflectionConfigGenerator;
 
 @SupportedAnnotationTypes("*")
@@ -43,7 +41,12 @@ public class AnnotationProcessor extends AbstractProcessor {
 				processor.process(new LinkedHashSet<>(annotations), roundEnv);
 			}
 		} catch (Exception e){
-			this.logger.error("fatal: %s\n ", e.getMessage(), ExceptionUtils.getStackTrace(e));
+			this.logger.error("fatal: %s", e.getMessage(), e);
+//			this.logger.error("%s fatal: %s\n %s",
+//					ClassUtils.getSimpleName(this),
+//					e.getMessage(),
+//					ExceptionUtils.getStackTrace(e)
+//			);
 		}
 		return false;
 	}

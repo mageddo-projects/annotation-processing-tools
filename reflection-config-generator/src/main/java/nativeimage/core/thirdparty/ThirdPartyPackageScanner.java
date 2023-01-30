@@ -1,4 +1,4 @@
-package nativeimage.thirdparty;
+package nativeimage.core.thirdparty;
 
 import java.lang.reflect.Modifier;
 import java.util.LinkedHashSet;

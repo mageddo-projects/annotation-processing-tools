@@ -24,7 +24,7 @@ import static nativeimage.core.NativeImages.solvePath;
 import nativeimage.core.domain.ReflectionConfig;
 import nativeimage.core.io.NativeImagePropertiesWriter;
 import nativeimage.core.io.ReflectionConfigWriter;
-import static nativeimage.thirdparty.ThirdPartyPackageScanner.findPackageClasses;
+import static nativeimage.core.thirdparty.ThirdPartyPackageScanner.findPackageClasses;
 
 /**
  * Will generate native image reflection config to project source classes.
@@ -95,9 +95,9 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 	}
 
 	static Class<?> chooseClass(Reflection reflection) {
-		return reflection.scanClass() != Void.class
-				? reflection.scanClass()
-				: ClassUtils.forName(reflection.scanClassName());
+		return ReflectionUtils.isVoid(reflection)
+				? ClassUtils.forName(reflection.scanClassName())
+				: reflection.scanClass();
 	}
 
 	void addClassAndNested(Reflection reflection, Class<?> clazz) {
@@ -135,8 +135,8 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 	private Element chooseElement(
 			Element element, Reflection reflection, RoundEnvironment roundEnv
 	) {
-		if (reflection.scanClass() != Void.class) {
-			return this.findElementAndNested(reflection.scanClass().getName(), roundEnv);
+		if (!ReflectionUtils.isVoid(reflection)) {
+			return this.findElementAndNested(ClassUtils.getName(reflection.scanClass()), roundEnv);
 		} else if (!reflection.scanClassName().isEmpty()) {
 			return this.findElementAndNested(reflection.scanClassName(), roundEnv);
 		}

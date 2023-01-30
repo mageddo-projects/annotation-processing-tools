@@ -20,8 +20,8 @@ public class ClassUtils {
 		return getClassPackage(className).contains(packageName);
 	}
 
-	public static List<Class<?>> findNestClasses(Class<?> clazz) {
-		throw new UnsupportedOperationException();
+	public static List<String> findNestClasses(String clazz) {
+		throw new UnsupportedOperationException("Not able to find class nested classes yet");
 	}
 
 	public static Class<?> forName(String className) {

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ReflectionConfigGenerationTest {
 
-	private final ObjectMapper objectMapper = new ObjectMapper()
+	private static final ObjectMapper objectMapper = new ObjectMapper()
 		.enable(SerializationFeature.INDENT_OUTPUT)
 		;
 
@@ -26,16 +26,49 @@ class ReflectionConfigGenerationTest {
 		// arrange
 
 		// act
-		final List<JsonNode> items = readReflectConfig();
+		final List<JsonNode> items = readReflectConfig("reflect.json");
 
 		// assert
 		assertEquals(13, items.size());
-		assertEquals(getResourceAsString("/reflection-config-generation-test/001.json"), objectMapper.writeValueAsString(items));
+		assertEquals(
+				getResourceAsString("/reflection-config-generation-test/001.json"),
+				objectMapper.writeValueAsString(items)
+		);
 	}
 
-	private List<JsonNode> readReflectConfig() throws JsonProcessingException {
-		List<JsonNode> items = new ArrayList<>();
-		final JsonNode reflectItems = objectMapper.readTree(getResourceAsString("/META-INF/native-image/com.acme/reflect.json"));
+	@Test
+	void mustConfigureThirdPartyReflectJson() throws JsonProcessingException {
+		// arrange
+
+		// act
+		final List<JsonNode> items = readReflectConfig("reflect-third-party.json");
+
+		// assert
+		assertEquals(14, items.size());
+		assertEquals(
+				getResourceAsString("/reflection-config-generation-test/002.json"),
+				objectMapper.writeValueAsString(items)
+		);
+	}
+
+
+	@Test
+	void mustConfigureNativeImagePropertiesFile(){
+		// arrange
+
+		// act
+		final String propsContent = getResourceAsString("/META-INF/native-image/com.acme/native-image.properties");
+
+		// assert
+		assertEquals(getResourceAsString("/reflection-config-generation-test/002.properties"), propsContent);
+	}
+
+
+	private List<JsonNode> readReflectConfig(final String fileName) throws JsonProcessingException {
+		final List<JsonNode> items = new ArrayList<>();
+		final JsonNode reflectItems = this.objectMapper.readTree(
+				getResourceAsString("/META-INF/native-image/com.acme/" + fileName)
+		);
 		for (JsonNode jsonNode : reflectItems) {
 			items.add(jsonNode);
 		}
@@ -48,14 +81,4 @@ class ReflectionConfigGenerationTest {
 		return items;
 	}
 
-	@Test
-	void mustConfigureNativeImagePropertiesFile(){
-		// arrange
-
-		// act
-		final String propsContent = getResourceAsString("/META-INF/native-image/com.acme/native-image.properties");
-
-		// assert
-		assertEquals(getResourceAsString("/reflection-config-generation-test/002.properties"), propsContent);
-	}
 }

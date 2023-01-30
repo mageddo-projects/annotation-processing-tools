@@ -27,14 +27,14 @@ subprojects {
     mavenCentral()
   }
 
-  sourceCompatibility = JavaVersion.VERSION_1_7
+  sourceCompatibility = JavaVersion.VERSION_1_8
 
   tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
   }
 
   compileTestJava {
-    sourceCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_1_8
   }
 
   test {

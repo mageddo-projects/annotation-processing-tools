@@ -10,7 +10,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  */
 public class ApLogger implements Logger {
 
-	public static final Kind LOG_LEVEL = Kind.OTHER;
+	public static final Kind LOG_LEVEL = Kind.NOTE;
 	private final Messager messager;
 
 	public ApLogger(Messager messager) {

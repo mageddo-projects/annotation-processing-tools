@@ -1,18 +1,25 @@
 package nativeimage.processor;
 
-import com.mageddo.aptools.Processor;
-import com.mageddo.aptools.log.Logger;
-import com.mageddo.aptools.log.LoggerFactory;
-import nativeimage.core.NativeImageReflectionConfigGenerator;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
-import javax.annotation.processing.*;
-import javax.lang.model.SourceVersion;
-import javax.lang.model.element.TypeElement;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedSourceVersion;
+import javax.lang.model.SourceVersion;
+import javax.lang.model.element.TypeElement;
+
+import com.mageddo.aptools.Processor;
+import com.mageddo.aptools.log.Logger;
+import com.mageddo.aptools.log.LoggerFactory;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+import nativeimage.core.NativeImageReflectionConfigGenerator;
 
 @SupportedAnnotationTypes("*")
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
@@ -27,7 +34,6 @@ public class AnnotationProcessor extends AbstractProcessor {
 		this.logger = LoggerFactory.bindLogger(this.processingEnv.getMessager());
 		this.processors = new ArrayList<>();
 		this.processors.add(new NativeImageReflectionConfigGenerator(processingEnv));
-
 	}
 
 	@Override

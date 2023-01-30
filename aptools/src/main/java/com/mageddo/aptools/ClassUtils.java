@@ -1,5 +1,7 @@
 package com.mageddo.aptools;
 
+import java.util.List;
+
 public class ClassUtils {
 	private ClassUtils() {
 	}
@@ -14,5 +16,17 @@ public class ClassUtils {
 
 	public static boolean doPackageOwnClass(String packageName, String className) {
 		return getClassPackage(className).contains(packageName);
+	}
+
+	public static List<Class<?>> findNestClasses(Class<?> clazz){
+		throw new UnsupportedOperationException();
+	}
+
+	public static Class<?> forName(String className) {
+		try {
+			return Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

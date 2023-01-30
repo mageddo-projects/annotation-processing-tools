@@ -13,6 +13,7 @@ public class ReflectionConfig {
 	private final boolean allDeclaredFields;
 	private final List<Method> methods;
 
+
 	ReflectionConfig(
 		String name, boolean allDeclaredConstructors, boolean allPublicConstructors,
 		boolean allDeclaredMethods, boolean allPublicMethods,

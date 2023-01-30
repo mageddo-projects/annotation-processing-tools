@@ -1,5 +1,6 @@
 package nativeimage;
 
+import com.mageddo.aptools.elements.ElementUtils;
 import nativeimage.core.TypeBuilder;
 import nativeimage.vo.Pojo;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ class TypeBuilderTest {
 		);
 
 		// act
-		final Set<String> classes = TypeBuilder.of(null, ann);
+		final Set<String> classes = TypeBuilder.of(ann, ElementUtils.toClassName(null));
 
 		// assert
 		assertEquals(1, classes.size());
@@ -51,7 +52,7 @@ class TypeBuilderTest {
 		);
 
 		// act
-		final Set<String> classes = TypeBuilder.of(null, ann);
+		final Set<String> classes = TypeBuilder.of(ann, ElementUtils.toClassName(null));
 
 		// assert
 		assertEquals(1, classes.size());
@@ -82,7 +83,7 @@ class TypeBuilderTest {
 		doReturn(name).when(element).getSimpleName();
 
 		// act
-		final Set<String> classes = TypeBuilder.of(element, ann);
+		final Set<String> classes = TypeBuilder.of(ann, ElementUtils.toClassName(element));
 
 		// assert
 		assertEquals(1, classes.size());
@@ -109,7 +110,7 @@ class TypeBuilderTest {
 		doReturn(expectedClass.getName()).when(element).toString();
 
 		// act
-		final Set<String> classes = TypeBuilder.of(element, ann);
+		final Set<String> classes = TypeBuilder.of(ann, ElementUtils.toClassName(element));
 
 		// assert
 		assertEquals(1, classes.size());

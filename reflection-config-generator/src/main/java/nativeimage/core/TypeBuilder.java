@@ -3,11 +3,9 @@ package nativeimage.core;
 import java.util.Collections;
 import java.util.Set;
 
-import javax.lang.model.element.Element;
 import javax.lang.model.type.MirroredTypeException;
 
 import com.mageddo.aptools.ClassUtils;
-import com.mageddo.aptools.elements.ElementUtils;
 
 import nativeimage.Reflection;
 
@@ -17,7 +15,7 @@ public final class TypeBuilder {
 		throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
 	}
 
-	public static Set<String> of(Element element, Reflection reflectionAnn) {
+	public static Set<String> of(Reflection reflectionAnn, String clazzName) {
 		if(!reflectionAnn.scanClassName().equals("")){
 			return toSet(reflectionAnn.scanClassName());
 		}
@@ -26,13 +24,12 @@ public final class TypeBuilder {
 			return toSet(scanClass);
 		}
 		if(!reflectionAnn.scanPackage().equals("")){
-			final String className = ElementUtils.toClassName(element);
-			if(ClassUtils.doPackageOwnClass(reflectionAnn.scanPackage(), className)){
-				return Collections.singleton(className);
+			if(ClassUtils.doPackageOwnClass(reflectionAnn.scanPackage(), clazzName)){
+				return toSet(clazzName);
 			}
 			return Collections.emptySet();
 		}
-		return toSet(ElementUtils.toClassName(element));
+		return toSet(clazzName);
 	}
 
 	private static String getScanClass(Reflection reflectionAnn) {

@@ -1,6 +1,7 @@
 package nativeimage.core.io;
 
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.tools.FileObject;
@@ -13,13 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 
 public class ReflectionConfigFileCreator {
-
-	public static SequenceWriter createWriterForConfigFile(
-			ProcessingEnvironment processingEnv, String fileName
-	) {
-		final FileObject fileObject = buildFileObject(processingEnv, fileName);
-		return createReflectionConfigWriter(fileObject);
-	}
 
 	public static FileObject buildFileObject(ProcessingEnvironment processingEnv, String fileName) {
 		try {
@@ -34,7 +28,7 @@ public class ReflectionConfigFileCreator {
 		}
 	}
 
-	public static SequenceWriter createReflectionConfigWriter(FileObject fileObject) {
+	public static SequenceWriter createReflectionConfigWriter(final OutputStream out) {
 		final DefaultPrettyPrinter.Indenter indenter = new DefaultIndenter(
 				"  ", DefaultIndenter.SYS_LF
 		);
@@ -45,7 +39,7 @@ public class ReflectionConfigFileCreator {
 			return new ObjectMapper()
 					.setSerializationInclusion(JsonInclude.Include.NON_NULL)
 					.writer(printer)
-					.writeValuesAsArray(fileObject.openOutputStream())
+					.writeValuesAsArray(out)
 					;
 		} catch (IOException e) {
 			throw new RuntimeException(e);

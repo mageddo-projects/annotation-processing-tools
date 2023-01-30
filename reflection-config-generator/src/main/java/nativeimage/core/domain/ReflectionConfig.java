@@ -1,5 +1,6 @@
 package nativeimage.core.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReflectionConfig {
@@ -143,4 +144,13 @@ public class ReflectionConfig {
 		}
 
 	}
+
+	public static void withConstructors(ReflectionConfig.ReflectionConfigBuilder builder) {
+		final List<Method> methods = new ArrayList<>();
+		methods.add(Method.of("<init>"));
+		builder.allDeclaredConstructors(true);
+		builder.allPublicConstructors(true);
+		builder.methods(methods);
+	}
+
 }

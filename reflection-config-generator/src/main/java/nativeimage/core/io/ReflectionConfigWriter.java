@@ -5,30 +5,20 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Set;
 
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.tools.FileObject;
-
-import com.fasterxml.jackson.databind.SequenceWriter;
-
-import static nativeimage.core.io.ReflectionConfigFileCreator.buildFileObject;
-import static nativeimage.core.io.ReflectionConfigFileCreator.createReflectionConfigWriter;
 import nativeimage.core.ReflectionConfigAppender;
 import nativeimage.core.domain.ReflectionConfig;
 
 public class ReflectionConfigWriter implements ReflectionConfigAppender, Closeable {
-	private final SequenceWriter writer;
-	private final URI fileUri;
+	private final Out out;
 
-	public ReflectionConfigWriter(ProcessingEnvironment processingEnv, String fileName) {
-		final FileObject fileObject = buildFileObject(processingEnv, fileName);
-		this.writer = createReflectionConfigWriter(fileObject);
-		this.fileUri = fileObject.toUri();
+	public ReflectionConfigWriter(Out out) {
+		this.out = out;
 	}
 
 	@Override
-	public void append(ReflectionConfig reflectionConfig) {
+	public void write(ReflectionConfig reflectionConfig) {
 		try {
-			this.writer.write(reflectionConfig);
+			this.out.getWriter().write(reflectionConfig);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -36,17 +26,17 @@ public class ReflectionConfigWriter implements ReflectionConfigAppender, Closeab
 
 	@Override
 	public void close() throws IOException {
-		this.writer.close();
+		this.out.getWriter().close();
 	}
 
 
 	public void writeAll(Set<ReflectionConfig> classes) {
 		for (ReflectionConfig config : classes) {
-			this.append(config);
+			this.write(config);
 		}
 	}
 
 	public URI getFileUri() {
-		return fileUri;
+		return this.out.getUri();
 	}
 }

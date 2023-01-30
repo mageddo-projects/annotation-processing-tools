@@ -1,9 +1,9 @@
 package nativeimage.core.thirdparty;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
-import com.mageddo.aptools.log.Logger;
-import com.mageddo.aptools.log.LoggerFactory;
+import com.mageddo.aptools.ClassUtils;
 
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
@@ -14,7 +14,7 @@ import org.reflections.util.FilterBuilder;
 
 public class ThirdPartyPackageScanner {
 
-	private static final Logger log = LoggerFactory.getLogger();
+//	private static final Logger log = LoggerFactory.getLogger();
 
 	/**
 	 * Will scan all classes within a package, nested classes also will be retrieved
@@ -35,12 +35,16 @@ public class ThirdPartyPackageScanner {
 //		final Set<String> classes = new Reflections(packageName)
 //				.getAll(Scanners.SubTypes);
 
-//		final Set<String> filteredClasses = new LinkedHashSet<>();
-//		for (String clazz : classes) {
-//			if (ClassUtils.doPackageOwnClass(packageName, clazz)) {
-//				filteredClasses.add(clazz);
-//			}
-//	}
+		final Set<Class<?>> filteredClasses = new LinkedHashSet<>();
+		for (Class<?> clazz : classes) {
+			if (
+					ClassUtils.doPackageOwnClass(packageName, clazz.getName())
+							&& !clazz.isInterface()
+							&& !clazz.isSynthetic()
+			) {
+				filteredClasses.add(clazz);
+			}
+	}
 //		final Set<String> filteredClasses = classes
 //				.stream()
 //				.filter(it -> ClassUtils.doPackageOwnClass(packageName, it))
@@ -50,7 +54,7 @@ public class ThirdPartyPackageScanner {
 //				"status=packageScanned, classes=%d, afterFilter=%d, package=%s",
 //				classes.size(),filteredClasses.size(),packageName
 //		);
-		return classes;
-}
+			return filteredClasses;
+		}
 
-}
+	}

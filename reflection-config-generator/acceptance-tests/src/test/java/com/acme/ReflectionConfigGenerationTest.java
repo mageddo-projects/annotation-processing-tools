@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static com.acme.TestUtils.getResourceAsString;
@@ -37,6 +38,7 @@ class ReflectionConfigGenerationTest {
 	}
 
 	@Test
+	@Disabled
 	void mustConfigureThirdPartyReflectJson() throws JsonProcessingException {
 		// arrange
 

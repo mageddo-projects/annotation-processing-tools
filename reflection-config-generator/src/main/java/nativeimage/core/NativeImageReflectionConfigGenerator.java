@@ -25,6 +25,7 @@ import nativeimage.Reflections;
 import static nativeimage.core.NativeImages.solvePath;
 import nativeimage.core.domain.ReflectionConfig;
 import nativeimage.core.io.NativeImagePropertiesWriter;
+import nativeimage.core.io.Out;
 import nativeimage.core.io.ReflectionConfigWriter;
 
 /**
@@ -147,17 +148,16 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 
 		final String classPackage = this.getClassPackage();
 		final String reflectFile = solvePath(classPackage, "reflect.json");
-		final String reflectFileThirdParty = solvePath(classPackage, "reflect-third-party.json");
 
 		try (
 				ReflectionConfigWriter appender =
-						new ReflectionConfigWriter(this.processingEnv, reflectFile);
+						new ReflectionConfigWriter(Out.of(this.processingEnv, reflectFile));
 		) {
 
 			appender.writeAll(this.classes);
 
 			final URI nativeImageFile = NativeImagePropertiesWriter.write(
-					this.processingEnv, classPackage, reflectFile, reflectFileThirdParty
+					this.processingEnv, classPackage, reflectFile
 			);
 			log.info(
 					"status=reflect-generation-done, objects=%d, path=%s",

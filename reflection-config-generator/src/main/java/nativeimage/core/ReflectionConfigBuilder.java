@@ -1,13 +1,11 @@
 package nativeimage.core;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import nativeimage.Reflection;
-import nativeimage.core.domain.Method;
 import nativeimage.core.domain.ReflectionConfig;
+import static nativeimage.core.domain.ReflectionConfig.withConstructors;
 
 //@Experimental
 public final class ReflectionConfigBuilder {
@@ -41,11 +39,7 @@ public final class ReflectionConfigBuilder {
 			.allDeclaredMethods(reflectionAnn.declaredMethods())
 		;
 		if(reflectionAnn.constructors()){
-			final List<Method> methods = new ArrayList<>();
-			methods.add(Method.of("<init>"));
-			builder.allDeclaredConstructors(true);
-			builder.allPublicConstructors(true);
-			builder.methods(methods);
+			withConstructors(builder);
 		}
 		return builder;
 	}

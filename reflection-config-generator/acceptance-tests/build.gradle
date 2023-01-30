@@ -1,6 +1,6 @@
 dependencies {
 
-	compileOnly(project(":reflection-config-generator"))
+	compile(project(":reflection-config-generator")) // compile for third party generation
 	annotationProcessor(project(":reflection-config-generator"))
 
 	compile ("com.fasterxml.jackson.core:jackson-databind:2.10.1")

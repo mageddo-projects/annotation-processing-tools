@@ -1,5 +1,13 @@
 [ {
-  "name" : "com.fasterxml.jackson.core.util.ByteArrayBuilder",
+  "name" : "com.fasterxml.jackson.core.util.BufferRecycler",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false
+}, {
+  "name" : "com.fasterxml.jackson.core.util.BufferRecyclers",
   "allDeclaredConstructors" : false,
   "allPublicConstructors" : false,
   "allDeclaredMethods" : false,
@@ -31,14 +39,6 @@
   "allPublicFields" : false,
   "allDeclaredFields" : false
 }, {
-  "name" : "com.fasterxml.jackson.core.util.DefaultPrettyPrinter$Indenter",
-  "allDeclaredConstructors" : false,
-  "allPublicConstructors" : false,
-  "allDeclaredMethods" : false,
-  "allPublicMethods" : false,
-  "allPublicFields" : false,
-  "allDeclaredFields" : false
-}, {
   "name" : "com.fasterxml.jackson.core.util.DefaultPrettyPrinter$NopIndenter",
   "allDeclaredConstructors" : false,
   "allPublicConstructors" : false,
@@ -47,39 +47,7 @@
   "allPublicFields" : false,
   "allDeclaredFields" : false
 }, {
-  "name" : "com.fasterxml.jackson.core.util.Instantiatable",
-  "allDeclaredConstructors" : false,
-  "allPublicConstructors" : false,
-  "allDeclaredMethods" : false,
-  "allPublicMethods" : false,
-  "allPublicFields" : false,
-  "allDeclaredFields" : false
-}, {
-  "name" : "com.fasterxml.jackson.core.util.InternCache",
-  "allDeclaredConstructors" : false,
-  "allPublicConstructors" : false,
-  "allDeclaredMethods" : false,
-  "allPublicMethods" : false,
-  "allPublicFields" : false,
-  "allDeclaredFields" : false
-}, {
-  "name" : "com.fasterxml.jackson.core.util.JsonGeneratorDelegate",
-  "allDeclaredConstructors" : false,
-  "allPublicConstructors" : false,
-  "allDeclaredMethods" : false,
-  "allPublicMethods" : false,
-  "allPublicFields" : false,
-  "allDeclaredFields" : false
-}, {
-  "name" : "com.fasterxml.jackson.core.util.JsonParserDelegate",
-  "allDeclaredConstructors" : false,
-  "allPublicConstructors" : false,
-  "allDeclaredMethods" : false,
-  "allPublicMethods" : false,
-  "allPublicFields" : false,
-  "allDeclaredFields" : false
-}, {
-  "name" : "com.fasterxml.jackson.core.util.JsonParserSequence",
+  "name" : "com.fasterxml.jackson.core.util.JacksonFeatureSet",
   "allDeclaredConstructors" : false,
   "allPublicConstructors" : false,
   "allDeclaredMethods" : false,
@@ -104,6 +72,38 @@
   "allDeclaredFields" : false
 }, {
   "name" : "com.fasterxml.jackson.core.util.Separators",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false
+}, {
+  "name" : "com.fasterxml.jackson.core.util.TextBuffer",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false
+}, {
+  "name" : "com.fasterxml.jackson.core.util.ThreadLocalBufferManager",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false
+}, {
+  "name" : "com.fasterxml.jackson.core.util.ThreadLocalBufferManager$ThreadLocalBufferManagerHolder",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false
+}, {
+  "name" : "com.fasterxml.jackson.core.util.VersionUtil",
   "allDeclaredConstructors" : false,
   "allPublicConstructors" : false,
   "allDeclaredMethods" : false,

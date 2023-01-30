@@ -1,11 +1,13 @@
 package com.acme;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.apache.commons.io.IOUtils;
 
-import java.io.IOException;
+import org.apache.commons.io.IOUtils;
 
 public class TestUtils {
 
@@ -14,10 +16,14 @@ public class TestUtils {
 
 	public static String getResourceAsString(String path) {
 		try {
-			return IOUtils.toString(TestUtils.class.getResourceAsStream(path), "UTF-8");
+			return IOUtils.toString(getResourceAsStream(path), "UTF-8");
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static InputStream getResourceAsStream(String path) {
+		return TestUtils.class.getResourceAsStream(path);
 	}
 
 	public static String sortJson(String json){

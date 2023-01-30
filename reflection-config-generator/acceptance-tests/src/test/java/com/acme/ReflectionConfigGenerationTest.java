@@ -1,19 +1,24 @@
 package com.acme;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
+import static com.acme.TestUtils.getResourceAsStream;
 import static com.acme.TestUtils.getResourceAsString;
+import nativeimage.core.thirdparty.Main;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ReflectionConfigGenerationTest {
@@ -23,33 +28,30 @@ class ReflectionConfigGenerationTest {
 		;
 
 	@Test
-	void mustConfigureReflectJson() throws JsonProcessingException {
+	void mustConfigureReflectJson() throws IOException {
 		// arrange
-
 		// act
-		final List<JsonNode> items = readReflectConfig("reflect.json");
-
 		// assert
-		assertEquals(13, items.size());
 		assertEquals(
 				getResourceAsString("/reflection-config-generation-test/001.json"),
-				objectMapper.writeValueAsString(items)
+				readReflectConfig("reflect.json")
 		);
 	}
 
 	@Test
-	@Disabled
-	void mustConfigureThirdPartyReflectJson() throws JsonProcessingException {
+	void mustConfigureThirdPartyReflectJson(@TempDir Path tmpDir) throws Exception {
 		// arrange
+		final Path reflectFile = Files.createTempFile(tmpDir, "reflect", ".json");
 
 		// act
-		final List<JsonNode> items = readReflectConfig("reflect-third-party.json");
+		Main.main(new String[]{
+				"com.fasterxml.jackson.core.util", reflectFile.toString()
+		});
 
 		// assert
-		assertEquals(14, items.size());
 		assertEquals(
-				getResourceAsString("/reflection-config-generation-test/002.json"),
-				objectMapper.writeValueAsString(items)
+				readReflectConfig(getResourceAsStream("/reflection-config-generation-test/002.json")),
+				readReflectConfig(Files.newInputStream(reflectFile))
 		);
 	}
 
@@ -66,11 +68,13 @@ class ReflectionConfigGenerationTest {
 	}
 
 
-	private List<JsonNode> readReflectConfig(final String fileName) throws JsonProcessingException {
+	private String readReflectConfig(final String fileName) throws IOException {
+		return readReflectConfig(getResourceAsStream("/META-INF/native-image/com.acme/" + fileName));
+	}
+
+	private String readReflectConfig(final InputStream in) throws IOException {
 		final List<JsonNode> items = new ArrayList<>();
-		final JsonNode reflectItems = this.objectMapper.readTree(
-				getResourceAsString("/META-INF/native-image/com.acme/" + fileName)
-		);
+		final JsonNode reflectItems = this.objectMapper.readTree(in);
 		for (JsonNode jsonNode : reflectItems) {
 			items.add(jsonNode);
 		}
@@ -80,7 +84,7 @@ class ReflectionConfigGenerationTest {
 				return a.at("/name").asText().compareTo(b.at("/name").asText());
 			}
 		});
-		return items;
+		return objectMapper.writeValueAsString(items);
 	}
 
 }

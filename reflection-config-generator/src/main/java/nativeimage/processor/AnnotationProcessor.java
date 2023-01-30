@@ -42,11 +42,6 @@ public class AnnotationProcessor extends AbstractProcessor {
 			}
 		} catch (Exception e){
 			this.logger.error("fatal: %s", e.getMessage(), e);
-//			this.logger.error("%s fatal: %s\n %s",
-//					ClassUtils.getSimpleName(this),
-//					e.getMessage(),
-//					ExceptionUtils.getStackTrace(e)
-//			);
 		}
 		return false;
 	}

@@ -24,7 +24,6 @@ import nativeimage.Reflections;
 				declaredFields = true
 		),
 		@Reflection(
-//				scanPackage = "org.apache.commons.io.monitor",
 				scanPackage = "com.fasterxml.jackson.core.util",
 				scanLibs = true
 		)

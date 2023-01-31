@@ -54,3 +54,23 @@ configure([
 ]){
   apply from: "${rootProject.rootDir}/nexus.gradle"
 }
+
+release {
+
+	project.ext.set("release.useAutomaticVersion", true)
+	git {
+		requireBranch.set("master")
+	}
+	failOnCommitNeeded = false
+	failOnPublishNeeded = false
+	failOnUnversionedFiles = false
+	buildTasks = []
+}
+
+confirmReleaseVersion.doLast {
+	def f = file("${project.projectDir}/README.md")
+	def text = f.text
+	f.withWriter { w ->
+		w << text.replaceAll("(:\\ )*\\d+\\.\\d+\\.\\d+", "\$1${version}")
+	}
+}

@@ -37,12 +37,6 @@ subprojects {
   }
 }
 
-nexusStaging {
-  packageGroup = 'com.mageddo'
-  username = project.findProperty("ossrhUsername")
-  password = project.findProperty("ossrhPassword")
-}
-
 configure([
     project(":aptools"), project(":lombok-ext"), project(":reflection-config-generator")
 ]){

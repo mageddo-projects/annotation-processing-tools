@@ -62,7 +62,6 @@ publishing {
 	}
 }
 
-
 if (project.hasProperty("signing.keyId")) {
 	apply plugin: 'signing'
 	signing {

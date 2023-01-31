@@ -1,72 +1,81 @@
-println ("> :${project.name}")
+println("> :${project.name}")
 
-apply plugin: "maven"
 apply plugin: "maven-publish"
-apply plugin: "de.marcphilipp.nexus-publish" // upload artificates to sonatype
 
 task sourcesJar(type: Jar) {
-  from sourceSets.main.allJava
-  archiveClassifier = 'sources'
+	from sourceSets.main.allJava
+	archiveClassifier = 'sources'
 }
 
 task javadocJar(type: Jar) {
-  from javadoc
-  archiveClassifier = 'javadoc'
+	from javadoc
+	archiveClassifier = 'javadoc'
 }
 
 artifacts {
-  archives javadocJar, sourcesJar
+	archives javadocJar, sourcesJar
 }
 
 publishing {
-  publications {
-    mavenJava(MavenPublication) {
-      from(components.java)
-      artifact sourcesJar
-      artifact javadocJar
-      pom {
-        name = project.name
-        packaging = 'jar'
-        description = project.description
-        url = "${projectPage}"
+	publications {
+		mavenJava(MavenPublication) {
+			from(components.java)
+			artifact sourcesJar
+			artifact javadocJar
+			pom {
+				name = project.name
+				packaging = 'jar'
+				description = project.description
+				url = "${projectUrl}"
 
-        scm {
-          connection = "${repositoryUrl}"
-          developerConnection = "${repositoryUrl}"
-          url = "${repositoryUrl}"
-        }
+				scm {
+					connection = "${projectUrl}"
+					developerConnection = "${projectUrl}"
+					url = "${projectUrl}"
+				}
 
-        licenses {
-          license {
-            name = 'The Apache License, Version 2.0'
-            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-          }
-        }
+				licenses {
+					license {
+						name = 'The Apache License, Version 2.0'
+						url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					}
+				}
 
-        developers {
-          developer {
-            id = 'mageddo'
-            name = 'Elvis Souza'
-            email = 'edigitalb@gmail.com'
-          }
-        }
-      }
-    }
-  }
+				developers {
+					developer {
+						id = 'mageddo'
+						name = 'Elvis Souza'
+						email = 'edigitalb@gmail.com'
+					}
+				}
+			}
+		}
+	}
+	repositories {
+		mavenCentral {
+			url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+			credentials {
+				username = project.findProperty("ossrhUsername")
+				password = project.findProperty("ossrhPassword")
+			}
+		}
+	}
 }
 
 nexusPublishing {
-  repositories {
-    sonatype{
-      username = project.findProperty("ossrhUsername")
-      password = project.findProperty("ossrhPassword")
-    }
-  }
+	repositories {
+		mavenCentral {
+			nexusUrl = uri("https://oss.sonatype.org/service/local/")
+			snapshotRepositoryUrl = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+			username = project.findProperty("ossrhUsername")
+			password = project.findProperty("ossrhPassword")
+		}
+	}
 }
 
 if (project.hasProperty("signing.keyId")) {
-  apply plugin: 'signing'
-  signing {
-    sign publishing.publications.mavenJava
-  }
+	apply plugin: 'signing'
+	signing {
+		sign publishing.publications.mavenJava
+	}
 }

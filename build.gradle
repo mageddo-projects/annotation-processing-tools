@@ -37,6 +37,18 @@ subprojects {
   }
 }
 
+nexusPublishing {
+	repositories {
+		mavenCentral {
+			nexusUrl = uri("https://oss.sonatype.org/service/local/")
+			snapshotRepositoryUrl = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+			username = project.findProperty("ossrhUsername")
+			password = project.findProperty("ossrhPassword")
+		}
+	}
+}
+
+
 configure([
     project(":aptools"), project(":lombok-ext"), project(":reflection-config-generator")
 ]){

@@ -1,13 +1,5 @@
 [ {
-  "name" : "com.acme.Car",
-  "allDeclaredConstructors" : true,
-  "allPublicConstructors" : false,
-  "allDeclaredMethods" : true,
-  "allPublicMethods" : false,
-  "allPublicFields" : false,
-  "allDeclaredFields" : true
-}, {
-  "name" : "com.acme.ClassWithNestedClass",
+  "name" : "com.fasterxml.jackson.core.util.ByteArrayBuilder",
   "allDeclaredConstructors" : false,
   "allPublicConstructors" : false,
   "allDeclaredMethods" : false,
@@ -15,7 +7,7 @@
   "allPublicFields" : false,
   "allDeclaredFields" : false
 }, {
-  "name" : "com.acme.ClassWithNestedClass$NestedClass",
+  "name" : "com.fasterxml.jackson.core.util.DefaultIndenter",
   "allDeclaredConstructors" : false,
   "allPublicConstructors" : false,
   "allDeclaredMethods" : false,
@@ -23,91 +15,83 @@
   "allPublicFields" : false,
   "allDeclaredFields" : false
 }, {
-  "name" : "com.acme.Fruit",
-  "allDeclaredConstructors" : true,
-  "allPublicConstructors" : true,
-  "allDeclaredMethods" : true,
-  "allPublicMethods" : true,
-  "allPublicFields" : true,
-  "allDeclaredFields" : true
-}, {
-  "name" : "com.acme.Fruit$ShouldNotScan",
-  "allDeclaredConstructors" : true,
-  "allPublicConstructors" : true,
-  "allDeclaredMethods" : true,
-  "allPublicMethods" : true,
-  "allPublicFields" : true,
-  "allDeclaredFields" : true
-}, {
-  "name" : "com.acme.Person",
-  "allDeclaredConstructors" : true,
-  "allPublicConstructors" : true,
-  "allDeclaredMethods" : false,
-  "allPublicMethods" : false,
-  "allPublicFields" : false,
-  "allDeclaredFields" : false,
-  "methods" : [ {
-    "name" : "<init>",
-    "parameterTypes" : [ ]
-  } ]
-}, {
-  "name" : "com.acme.RuntimeReflectionFruit",
-  "allDeclaredConstructors" : true,
-  "allPublicConstructors" : false,
-  "allDeclaredMethods" : false,
-  "allPublicMethods" : false,
-  "allPublicFields" : false,
-  "allDeclaredFields" : true
-}, {
-  "name" : "com.acme.firstlevel.Config",
+  "name" : "com.fasterxml.jackson.core.util.DefaultPrettyPrinter",
   "allDeclaredConstructors" : false,
   "allPublicConstructors" : false,
   "allDeclaredMethods" : false,
   "allPublicMethods" : false,
   "allPublicFields" : false,
-  "allDeclaredFields" : true
+  "allDeclaredFields" : false
 }, {
-  "name" : "com.acme.firstlevel.secondlevel.Stuff",
+  "name" : "com.fasterxml.jackson.core.util.DefaultPrettyPrinter$FixedSpaceIndenter",
   "allDeclaredConstructors" : false,
   "allPublicConstructors" : false,
   "allDeclaredMethods" : false,
   "allPublicMethods" : false,
   "allPublicFields" : false,
-  "allDeclaredFields" : true
+  "allDeclaredFields" : false
 }, {
-  "name" : "com.acme.firstlevel.secondlevel.Stuff2",
-  "allDeclaredConstructors" : true,
-  "allPublicConstructors" : true,
-  "allDeclaredMethods" : false,
-  "allPublicMethods" : false,
-  "allPublicFields" : false,
-  "allDeclaredFields" : false,
-  "methods" : [ {
-    "name" : "<init>",
-    "parameterTypes" : [ ]
-  } ]
-}, {
-  "name" : "com.acme.subpackage.Color",
+  "name" : "com.fasterxml.jackson.core.util.DefaultPrettyPrinter$NopIndenter",
   "allDeclaredConstructors" : false,
   "allPublicConstructors" : false,
   "allDeclaredMethods" : false,
   "allPublicMethods" : false,
   "allPublicFields" : false,
-  "allDeclaredFields" : true
+  "allDeclaredFields" : false
 }, {
-  "name" : "com.acme.subpackage.UpperCass",
+  "name" : "com.fasterxml.jackson.core.util.InternCache",
   "allDeclaredConstructors" : false,
   "allPublicConstructors" : false,
   "allDeclaredMethods" : false,
   "allPublicMethods" : false,
   "allPublicFields" : false,
-  "allDeclaredFields" : true
+  "allDeclaredFields" : false
 }, {
-  "name" : "com.acme.subpackage.UpperCass$InnerClass",
+  "name" : "com.fasterxml.jackson.core.util.JsonGeneratorDelegate",
   "allDeclaredConstructors" : false,
   "allPublicConstructors" : false,
   "allDeclaredMethods" : false,
   "allPublicMethods" : false,
   "allPublicFields" : false,
-  "allDeclaredFields" : true
+  "allDeclaredFields" : false
+}, {
+  "name" : "com.fasterxml.jackson.core.util.JsonParserDelegate",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false
+}, {
+  "name" : "com.fasterxml.jackson.core.util.JsonParserSequence",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false
+}, {
+  "name" : "com.fasterxml.jackson.core.util.MinimalPrettyPrinter",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false
+}, {
+  "name" : "com.fasterxml.jackson.core.util.RequestPayload",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false
+}, {
+  "name" : "com.fasterxml.jackson.core.util.Separators",
+  "allDeclaredConstructors" : false,
+  "allPublicConstructors" : false,
+  "allDeclaredMethods" : false,
+  "allPublicMethods" : false,
+  "allPublicFields" : false,
+  "allDeclaredFields" : false
 } ]

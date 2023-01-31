@@ -1,49 +1,53 @@
 package nativeimage;
 
-import nativeimage.core.TypeBuilder;
-import nativeimage.vo.Pojo;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import sun.reflect.annotation.AnnotationParser;
-
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.Name;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Name;
+
+import com.mageddo.aptools.elements.ElementUtils;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import nativeimage.core.TypeBuilder;
+import nativeimage.vo.Pojo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
+import sun.reflect.annotation.AnnotationParser;
 
 class TypeBuilderTest {
 
 	@Test
-	void mustMapScanClassName() {
+	void mustMapScanClassNameWhenClassNotSet() {
 		// arrange
 
+		final String expectedClassName = Pojo.class.getName();
 		final Map<String, Object> params = new LinkedHashMap<>();
-		params.put("scanClassName", Pojo.class.getName());
-		params.put("scanClass", Set.class);
+		params.put("scanClassName", expectedClassName);
+		params.put("scanClass", Void.class);
 
 		final Reflection ann = (Reflection) AnnotationParser.annotationForMap(
 			Reflection.class, params
 		);
 
 		// act
-		final Set<String> classes = TypeBuilder.of(null, ann);
+		final Set<String> classes = TypeBuilder.of(ann, expectedClassName);
 
 		// assert
 		assertEquals(1, classes.size());
-		assertEquals(Pojo.class.getName(), classes.iterator().next());
+		assertEquals(expectedClassName, classes.iterator().next());
 	}
 
 	@Test
 	void mustMapScanClass() {
 		// arrange
-
+		final String expectedClassName = Pojo.class.getName();
 		final Map<String, Object> params = new LinkedHashMap<>();
-		params.put("scanClassName", "");
+		params.put("scanClassName", Map.class.getName());
 		params.put("scanClass", Pojo.class);
 
 		final Reflection ann = (Reflection) AnnotationParser.annotationForMap(
@@ -51,7 +55,7 @@ class TypeBuilderTest {
 		);
 
 		// act
-		final Set<String> classes = TypeBuilder.of(null, ann);
+		final Set<String> classes = TypeBuilder.of(ann, expectedClassName);
 
 		// assert
 		assertEquals(1, classes.size());
@@ -82,7 +86,7 @@ class TypeBuilderTest {
 		doReturn(name).when(element).getSimpleName();
 
 		// act
-		final Set<String> classes = TypeBuilder.of(element, ann);
+		final Set<String> classes = TypeBuilder.of(ann, ElementUtils.toClassName(element));
 
 		// assert
 		assertEquals(1, classes.size());
@@ -109,7 +113,7 @@ class TypeBuilderTest {
 		doReturn(expectedClass.getName()).when(element).toString();
 
 		// act
-		final Set<String> classes = TypeBuilder.of(element, ann);
+		final Set<String> classes = TypeBuilder.of(ann, ElementUtils.toClassName(element));
 
 		// assert
 		assertEquals(1, classes.size());

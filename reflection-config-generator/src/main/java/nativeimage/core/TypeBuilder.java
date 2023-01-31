@@ -3,11 +3,9 @@ package nativeimage.core;
 import java.util.Collections;
 import java.util.Set;
 
-import javax.lang.model.element.Element;
-import javax.lang.model.type.MirroredTypeException;
-
 import com.mageddo.aptools.ClassUtils;
-import com.mageddo.aptools.elements.ElementUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 import nativeimage.Reflection;
 
@@ -17,30 +15,20 @@ public final class TypeBuilder {
 		throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
 	}
 
-	public static Set<String> of(Element element, Reflection reflectionAnn) {
-		if(!reflectionAnn.scanClassName().equals("")){
-			return toSet(reflectionAnn.scanClassName());
+	public static Set<String> of(Reflection reflectionAnn, String clazzName) {
+		final String expectedClassName = ReflectionUtils.getClassName(reflectionAnn);
+		if(StringUtils.isNotBlank(expectedClassName)){
+			if(ClassUtils.doClassOwnPossibleSubClassOrIsTheSame(expectedClassName, clazzName)){
+				return toSet(clazzName);
+			}
 		}
-		final String scanClass = getScanClass(reflectionAnn);
-		if(!scanClass.equals(Void.class.getName())){
-			return toSet(scanClass);
-		}
-		if(!reflectionAnn.scanPackage().equals("")){
-			final String className = ElementUtils.toClassName(element);
-			if(ClassUtils.doPackageOwnClass(reflectionAnn.scanPackage(), className)){
-				return Collections.singleton(className);
+		if (StringUtils.isNotEmpty(reflectionAnn.scanPackage())) {
+			if (ClassUtils.doPackageOwnClass(reflectionAnn.scanPackage(), clazzName)) {
+				return toSet(clazzName);
 			}
 			return Collections.emptySet();
 		}
-		return toSet(ElementUtils.toClassName(element));
-	}
-
-	private static String getScanClass(Reflection reflectionAnn) {
-		try {
-			return reflectionAnn.scanClass().getName();
-		} catch (MirroredTypeException e){
-			return e.getTypeMirror().toString();
-		}
+		return toSet(clazzName);
 	}
 
 	private static Set<String> toSet(String type) {

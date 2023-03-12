@@ -109,6 +109,10 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 
 	private Element findElementAndNested(String className, RoundEnvironment roundEnv) {
 		for (Element element : roundEnv.getRootElements()) {
+			if (ElementUtils.isNotTypeElement(element)) {
+				log.debug("status=notTypeElement, element={}", element);
+				continue;
+			}
 			if (ElementUtils.isEquals(element, className)) {
 				return element;
 			}
@@ -136,6 +140,9 @@ public class NativeImageReflectionConfigGenerator implements Processor {
 				element.asType(), element.getKind(), element.getSimpleName(),
 				element.getEnclosingElement(), element.getClass()
 		);
+		if(ElementUtils.isNotTypeElement(element)){
+			return;
+		}
 		this.classPackage = this.classPackage == null ?
 				ClassUtils.getClassPackage(element.toString()) : this.classPackage;
 		for (ReflectionConfig config : ReflectionConfigBuilder.of(annotation, toClassName(element))) {

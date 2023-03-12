@@ -45,4 +45,8 @@ public class ElementUtils {
 	public static boolean isEquals(Element element, String className) {
 		return Objects.equals(ElementUtils.toClassName(element), className);
 	}
+
+	public static boolean isNotTypeElement(Element element) {
+		return !isTypeElement(element);
+	}
 }

@@ -10,6 +10,12 @@ A set of useful tools when creating annotation processing libs
 ## Requirements
 * Java 7+
 
+## Publishing a new version
+
+```bash
+$ ./gradlew clean release build publishToMavenCentral closeAndReleaseMavenCentralStagingRepository
+```
+
 [1]: lombok-ext
 [2]: reflection-config-generator
 [3]: https://www.graalvm.org/22.0/reference-manual/native-image/Reflection/#manual-configuration
